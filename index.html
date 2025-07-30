@@ -1636,6 +1636,9 @@
     </script>
 
 
+
+    
+
 <!-- Toevoeging aan love_game_extended.html -->
 <!-- Zet dit direct voor </body> -->
 
@@ -1653,13 +1656,7 @@
     <div class="start-title">🏆 Top 10 Highscores 🏆</div>
     <ol id="highscoreList" style="text-align:left; font-size:18px; max-height: 300px; overflow-y: auto;">
     </ol>
-    <button class="start-btn" onclick="restartGame()">Speel opnieuw 🔁</button>
-</div>
-
-<div id="topThreeContainer" style="text-align:center; margin-bottom: 20px;">
-    <div style="font-size: 20px; margin-bottom: 10px; color:#e91e63;"><strong>🏆 Top 3 Spelers</strong></div>
-    <ol id="topThreeList" style="font-size:16px; color:#444; line-height:1.6; list-style-position:inside;"></ol>
-    <button class="start-btn" onclick="showHighscores()" style="margin-top:10px; font-size:14px; padding:10px 20px;">Bekijk Top 10 📋</button>
+    <button class="start-btn" onclick="restartGame(true)">Speel opnieuw 🔁</button>
 </div>
 
 <script>
@@ -1696,21 +1693,69 @@
     }
 
     function populateTopThree() {
-        const list = document.getElementById("topThreeList");
-        if (!list) return;
+        const container = document.getElementById("startScreen");
+        if (!container) return;
+
         const topThree = highscores.slice(0, 3);
-        list.innerHTML = "";
-        topThree.forEach((entry, index) => {
-            let badge = index === 0 ? "👑 MVP" : index === 1 ? "🥈" : "🥉";
-            list.innerHTML += `<li><strong>${entry.name}</strong>: ${entry.score} ${badge}</li>`;
-        });
+
+        const topDiv = document.createElement("div");
+        topDiv.style.marginTop = "20px";
+        topDiv.innerHTML = `
+            <div style="font-size: 18px; color:#e91e63; font-weight: bold; margin-bottom: 10px;">🏆 Top 3 Spelers</div>
+            <ol style="font-size:16px; color:#444; line-height:1.6; list-style-position:inside;">
+                ${topThree.map((entry, index) => {
+                    const badge = index === 0 ? "👑 MVP" : index === 1 ? "🥈" : "🥉";
+                    return `<li><strong>${entry.name}</strong>: ${entry.score} ${badge}</li>`;
+                }).join('')}
+            </ol>
+            <button class="start-btn" onclick="showHighscores()" style="margin-top:10px; font-size:14px; padding:10px 20px;">Bekijk Top 10 📋</button>
+        `;
+
+        const startBtn = container.querySelector(".start-btn");
+        container.insertBefore(topDiv, startBtn);
     }
 
-    // Roep top 3 aan als startscherm geladen wordt
+    function restartGame(force = false) {
+        document.querySelector('.game-over')?.remove();
+        document.getElementById("highscoreModal").style.display = "none";
+        document.getElementById("highscoreBoard").style.display = "none";
+        if (force) startScreen.style.display = 'flex';
+        else startScreen.style.display = 'flex';
+    }
+
+    // Initialiseer top 3 wanneer geladen
     document.addEventListener('DOMContentLoaded', populateTopThree);
 </script>
 
+<style>
+/* Fix voor achtergrond emoji's op mobile */
+.bg-heart {
+    pointer-events: none;
+    opacity: 0.3 !important;
+    filter: blur(1px);
+}
 
+@media (max-width: 768px) {
+    .header, .love-meter, .instructions {
+        transform: scale(0.8);
+        transform-origin: top left;
+    }
+    .love-meter {
+        right: 5px !important;
+        top: 90px !important;
+    }
+    .header {
+        top: 10px !important;
+    }
+    .instructions {
+        font-size: 12px !important;
+        padding: 10px 15px !important;
+    }
+    .game-stats > div {
+        font-size: 14px !important;
+    }
+}
+</style>
 
     
 </body>

@@ -1634,5 +1634,84 @@
             }
         }, { once: true });
     </script>
+
+
+<!-- Toevoeging aan love_game_extended.html -->
+<!-- Zet dit direct voor </body> -->
+
+<div id="highscoreModal" class="start-screen" style="display:none; z-index:5000">
+    <div class="start-title">🎉 Spel afgelopen!</div>
+    <div class="start-instructions">
+        Je score: <strong id="finalScoreDisplay"></strong><br><br>
+        Vul je naam in om je score op te slaan:
+        <input type="text" id="playerName" placeholder="Jouw naam" style="margin-top:10px; padding:10px; border-radius:10px; width: 60%; font-size: 16px;">
+    </div>
+    <button class="start-btn" onclick="saveScore()">Score opslaan ✅</button>
+</div>
+
+<div id="highscoreBoard" class="start-screen" style="display:none; z-index:4999">
+    <div class="start-title">🏆 Top 10 Highscores 🏆</div>
+    <ol id="highscoreList" style="text-align:left; font-size:18px; max-height: 300px; overflow-y: auto;">
+    </ol>
+    <button class="start-btn" onclick="restartGame()">Speel opnieuw 🔁</button>
+</div>
+
+<div id="topThreeContainer" style="text-align:center; margin-bottom: 20px;">
+    <div style="font-size: 20px; margin-bottom: 10px; color:#e91e63;"><strong>🏆 Top 3 Spelers</strong></div>
+    <ol id="topThreeList" style="font-size:16px; color:#444; line-height:1.6; list-style-position:inside;"></ol>
+    <button class="start-btn" onclick="showHighscores()" style="margin-top:10px; font-size:14px; padding:10px 20px;">Bekijk Top 10 📋</button>
+</div>
+
+<script>
+    let highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+
+    function showGameOver() {
+        const finalLevel = loveLevels.find(level => level.level === currentLevel);
+        document.getElementById("finalScoreDisplay").textContent = `${score} punten (${finalLevel?.name || 'Onbekend'})`;
+        document.getElementById("highscoreModal").style.display = "flex";
+    }
+
+    function saveScore() {
+        const name = document.getElementById("playerName").value.trim() || "Naamloos";
+        highscores.push({ name, score });
+        highscores.sort((a, b) => b.score - a.score);
+        highscores = highscores.slice(0, 10);
+        localStorage.setItem("highscores", JSON.stringify(highscores));
+
+        document.getElementById("highscoreModal").style.display = "none";
+        showHighscores();
+    }
+
+    function showHighscores() {
+        const list = document.getElementById("highscoreList");
+        list.innerHTML = "";
+        highscores.forEach((entry, index) => {
+            let badge = "";
+            if (index === 0) badge = " 👑 MVP";
+            else if (index === 1) badge = " 🥈";
+            else if (index === 2) badge = " 🥉";
+            list.innerHTML += `<li><strong>${entry.name}</strong>: ${entry.score} punten${badge}</li>`;
+        });
+        document.getElementById("highscoreBoard").style.display = "flex";
+    }
+
+    function populateTopThree() {
+        const list = document.getElementById("topThreeList");
+        if (!list) return;
+        const topThree = highscores.slice(0, 3);
+        list.innerHTML = "";
+        topThree.forEach((entry, index) => {
+            let badge = index === 0 ? "👑 MVP" : index === 1 ? "🥈" : "🥉";
+            list.innerHTML += `<li><strong>${entry.name}</strong>: ${entry.score} ${badge}</li>`;
+        });
+    }
+
+    // Roep top 3 aan als startscherm geladen wordt
+    document.addEventListener('DOMContentLoaded', populateTopThree);
+</script>
+
+
+
+    
 </body>
 </html>

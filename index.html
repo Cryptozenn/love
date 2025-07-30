@@ -19,6 +19,7 @@
             overflow: hidden;
             height: 100vh;
             position: relative;
+            min-height: 100vh;
         }
 
         @keyframes gradientShift {
@@ -217,14 +218,29 @@
         }
 
         @keyframes fall {
-            from { top: -50px; }
-            to { top: 100vh; }
+            from { 
+                top: -50px; 
+                transform: translateX(0px) rotate(0deg);
+            }
+            to { 
+                top: 100vh; 
+                transform: translateX(var(--drift)) rotate(var(--rotation));
+            }
         }
 
         @keyframes sway {
-            0%, 100% { transform: translateX(0px) rotate(0deg); }
-            25% { transform: translateX(10px) rotate(5deg); }
-            75% { transform: translateX(-10px) rotate(-5deg); }
+            0%, 100% { 
+                transform: translateX(0px) rotate(0deg) scale(1); 
+            }
+            25% { 
+                transform: translateX(15px) rotate(8deg) scale(1.1); 
+            }
+            50% { 
+                transform: translateX(-5px) rotate(-3deg) scale(0.95); 
+            }
+            75% { 
+                transform: translateX(-20px) rotate(-10deg) scale(1.05); 
+            }
         }
 
         /* Item Sizes - 30% kleiner gemaakt */
@@ -812,9 +828,19 @@
         /* Mobile Responsive Design */
         @media (max-width: 768px) {
             body {
-                background: linear-gradient(135deg, #ff6b9d, #ffc3e0, #ff9ff3, #f368e0) !important;
-                background-size: 400% 400% !important;
-                animation: gradientShift 4s ease-in-out infinite !important;
+                background: linear-gradient(135deg, #ff6b9d, #ffc3e0, #ff9ff3, #f368e0);
+                background-size: 400% 400%;
+                animation: gradientShift 4s ease-in-out infinite;
+                background-attachment: fixed;
+                min-height: 100vh;
+                height: 100vh;
+            }
+            
+            html {
+                background: linear-gradient(135deg, #ff6b9d, #ffc3e0, #ff9ff3, #f368e0);
+                background-size: 400% 400%;
+                animation: gradientShift 4s ease-in-out infinite;
+                min-height: 100vh;
             }
             
             .title {
@@ -1251,9 +1277,9 @@
                     highScores = JSON.parse(saved);
                 } else {
                     highScores = [
-                        { name: "Emma", score: 400, level: 4, date: new Date().toLocaleDateString('en-US') },
-                        { name: "Alex", score: 350, level: 3, date: new Date().toLocaleDateString('en-US') },
-                        { name: "Sam", score: 300, level: 3, date: new Date().toLocaleDateString('en-US') }
+                        { name: "Genni", score: 400, level: 4, date: new Date().toLocaleDateString('en-US') },
+                        { name: "Genni", score: 350, level: 3, date: new Date().toLocaleDateString('en-US') },
+                        { name: "Genni", score: 300, level: 3, date: new Date().toLocaleDateString('en-US') }
                     ];
                     saveHighScores();
                 }
@@ -1751,10 +1777,53 @@
             
             item.textContent = emoji;
             item.classList.add(sizeClass);
-            item.style.left = Math.random() * (window.innerWidth - 150) + 'px'; // Meer ruimte voor grotere items
             
-            const duration = window.innerWidth <= 768 ? 4.5 + Math.random() * 2.5 : 3.5 + Math.random() * 3;
-            item.style.animationDuration = `${duration}s, 2s`;
+            // Verbeterde positionering - items verdeeld over hele breedte
+            const screenWidth = window.innerWidth;
+            const itemWidth = 100; // Geschatte item breedte
+            const margin = 20;
+            const spawnX = margin + Math.random() * (screenWidth - itemWidth - (margin * 2));
+            item.style.left = spawnX + 'px';
+            
+            // Variabele snelheden gebaseerd op level en item type
+            const baseSpeed = window.innerWidth <= 768 ? 3.5 : 2.5;
+            const levelMultiplier = 1 + (currentLevel * 0.1); // 10% sneller per level
+            const randomSpeed = 0.8 + Math.random() * 1.4; // 80% tot 220% van base speed
+            const finalSpeed = (baseSpeed / levelMultiplier) * randomSpeed;
+            
+            // Verschillende bewegingspatronen per item type
+            let driftAmount, rotationAmount, swayDuration;
+            
+            if (sizeClass.includes('timer') || sizeClass.includes('bonus') || sizeClass.includes('rain')) {
+                // Speciale items: meer beweging om moeilijker te vangen
+                driftAmount = -100 + Math.random() * 200; // -100px tot +100px
+                rotationAmount = -180 + Math.random() * 360; // -180° tot +180°
+                swayDuration = 1.2 + Math.random() * 1.6; // 1.2s tot 2.8s
+            } else if (sizeClass.includes('large')) {
+                // Grote items: minder beweging, langzamer
+                driftAmount = -50 + Math.random() * 100; // -50px tot +50px
+                rotationAmount = -90 + Math.random() * 180; // -90° tot +90°
+                swayDuration = 2.5 + Math.random() * 1.5; // 2.5s tot 4s
+            } else if (sizeClass.includes('small')) {
+                // Kleine items: meer beweging, sneller
+                driftAmount = -80 + Math.random() * 160; // -80px tot +80px
+                rotationAmount = -270 + Math.random() * 540; // -270° tot +270°
+                swayDuration = 0.8 + Math.random() * 1.2; // 0.8s tot 2s
+            } else {
+                // Medium items: gemiddelde beweging
+                driftAmount = -60 + Math.random() * 120; // -60px tot +60px
+                rotationAmount = -135 + Math.random() * 270; // -135° tot +135°
+                swayDuration = 1.5 + Math.random() * 1.5; // 1.5s tot 3s
+            }
+            
+            // CSS custom properties voor complexere animaties
+            item.style.setProperty('--drift', driftAmount + 'px');
+            item.style.setProperty('--rotation', rotationAmount + 'deg');
+            item.style.animationDuration = `${finalSpeed}s, ${swayDuration}s`;
+            
+            // Verschillende timing delays voor meer natuurlijke spreiding
+            const delay = Math.random() * 0.5; // 0 tot 0.5 seconden delay
+            item.style.animationDelay = `${delay}s, 0s`;
             
             item.addEventListener('click', () => {
                 if (!gameActive || bonusActive || rainActive) return;
@@ -1813,7 +1882,7 @@
                 if (item.parentNode) {
                     item.remove();
                 }
-            }, duration * 1000);
+            }, (finalSpeed + delay) * 1000);
         }
 
         function showPointsPopup(points, x, y) {

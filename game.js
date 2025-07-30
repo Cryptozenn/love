@@ -460,7 +460,106 @@ function setupBonusGame() {
     document.querySelectorAll('.bubble-heart').forEach(el => el.remove());
     bubbleHearts = [];
     
-    for (let row = 0; row < 6; row++) {
+    // Slower bubble arrangement for mobile
+    const cols = window.innerWidth <= 768 ? 10 : 12;
+    const rows = window.innerWidth <= 768 ? 5 : 6;
+    const spacing = window.innerWidth <= 768 ? 65 : 60;
+    
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            if (Math.random() > 0.25) { // More bubbles
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble-heart');
+                
+                const heartType = bonusHeartColors[Math.floor(Math.random() * bonusHeartColors.length)];
+                bubble.textContent = heartType;
+                bubble.dataset.color = heartType;
+                
+                const x = 80 + col * spacing;
+                const y = 140 + row * spacing;
+                
+                bubble.style.left = x + 'px';
+                bubble.style.top = y + 'px';
+                bubble.style.transform = 'translate(-50%, -50%)';
+                
+                bubble.addEventListener('click', () => shootHeart(x, y, heartType));
+                
+                bonusGame.appendChild(bubble);
+                bubbleHearts.push({ element: bubble, x, y, color: heartType });
+            }
+        }
+    }
+    
+    currentShooterHeart = bonusHeartColors[Math.floor(Math.random() * bonusHeartColors.length)];
+    shooterElement.textContent = currentShooterHeart;
+}
+
+function shootHeart(targetX, targetY, targetColor) {
+    if (!bonusActive) return;
+    
+    const shootingHeart = document.createElement('div');
+    shootingHeart.classList.add('shooting-heart');
+    shootingHeart.textContent = currentShooterHeart;
+    
+    const shooterRect = shooterElement.getBoundingClientRect();
+    const startX = shooterRect.left + shooterRect.width / 2;
+    const startY = shooterRect.top;
+    
+    shootingHeart.style.left = startX + 'px';
+    shootingHeart.style.top = startY + 'px';
+    
+    bonusGame.appendChild(shootingHeart);
+    
+    const deltaX = targetX - startX;
+    const deltaY = targetY - startY;
+    // Slower shooting for mobile
+    const duration = window.innerWidth <= 768 ? 700 : 500;
+    
+    shootingHeart.animate([
+        { transform: 'translate(0, 0)' },
+        { transform: `translate(${deltaX}px, ${deltaY}px)` }
+    ], {
+        duration: duration,
+        easing: 'ease-out'
+    }).addEventListener('finish', () => {
+        checkMatch(targetX, targetY, currentShooterHeart);
+        shootingHeart.remove();
+    });
+}
+
+function showBonusReadyPopup() {
+    playBonusSound();
+    
+    const popup = document.createElement('div');
+    popup.classList.add('bonus-popup');
+    popup.innerHTML = `
+        🎯 BONUS READY! 🎯<br>
+        <div style="font-size: 18px; margin-top: 10px;">Catch a 🎁 to start Heart Shooter!</div>
+    `;
+    
+    document.body.appendChild(popup);
+    
+    setTimeout(() => {
+        popup.remove();
+    }, 3000);
+}
+
+function showRainReadyPopup() {
+    playBonusSound();
+    
+    const popup = document.createElement('div');
+    popup.classList.add('bonus-popup', 'rain-popup');
+    popup.innerHTML = `
+        🌧️ RAIN READY! 🌧️<br>
+        <div style="font-size: 18px; margin-top: 10px;">Catch a 🎀 to start Love Rain!</div>
+    `;
+    
+    document.body.appendChild(popup);
+    
+    setTimeout(() => {
+        popup.remove();
+    }, 3000);
+} row++) {
         for (let col = 0; col < 12; col++) {
             if (Math.random() > 0.3) {
                 const bubble = document.createElement('div');
@@ -710,18 +809,37 @@ function createFallingItem() {
     const itemType = Math.random();
     let emoji, points, sizeClass;
     
-    if (itemType < 0.02) {
-        // Rain trigger items (2% chance - reduced from 5%)
-        emoji = rainTriggerItems[Math.floor(Math.random() * rainTriggerItems.length)];
-        sizeClass = 'rain-trigger-item';
-        points = 'rain';
-    } else if (itemType < 0.05) {
-        // Timer items (3% chance)
+    if (itemType < 0.015) {
+        // Rain trigger items (1.5% chance - only when rain meter is full)
+        if (rainReady) {
+            emoji = rainTriggerItems[Math.floor(Math.random() * rainTriggerItems.length)];
+            sizeClass = 'rain-trigger-item';
+            points = 'rain';
+        } else {
+            // If rain not ready, make it a regular heart instead
+            emoji = hearts[Math.floor(Math.random() * hearts.length)];
+            sizeClass = 'heart-medium';
+            points = 10;
+        }
+    } else if (itemType < 0.04) {
+        // Timer items (2.5% chance)
         emoji = timerItems[Math.floor(Math.random() * timerItems.length)];
         sizeClass = 'timer-item';
         points = 'time';
+    } else if (itemType < 0.07) {
+        // Bonus items (3% chance - only when bonus meter is full)
+        if (bonusReady) {
+            emoji = '🎁';
+            sizeClass = 'bonus-item';
+            points = 'bonus';
+        } else {
+            // If bonus not ready, make it a regular kiss instead
+            emoji = kisses[Math.floor(Math.random() * kisses.length)];
+            sizeClass = 'kiss-medium';
+            points = 15;
+        }
     } else if (itemType < 0.65) {
-        // Hearts (60% chance)
+        // Hearts (58% chance)
         emoji = hearts[Math.floor(Math.random() * hearts.length)];
         const size = Math.random();
         if (size < 0.5) {
@@ -754,7 +872,7 @@ function createFallingItem() {
     item.classList.add(sizeClass);
     item.style.left = Math.random() * (window.innerWidth - 50) + 'px';
     
-    const duration = window.innerWidth <= 768 ? 4 + Math.random() * 2 : 3 + Math.random() * 3;
+    const duration = window.innerWidth <= 768 ? 4.5 + Math.random() * 2.5 : 3.5 + Math.random() * 3;
     item.style.animationDuration = `${duration}s, 2s`;
     
     item.addEventListener('click', () => {
@@ -765,27 +883,41 @@ function createFallingItem() {
         if (points === 'time') {
             addTime(5);
             showPointsPopup('+5s', item.offsetLeft, item.offsetTop);
-        } else if (points === 'rain') {
-            // Increase rain progress more significantly
-            rainProgress += 3;
-            if (rainProgress >= 8 && !rainReady) {
-                rainReady = true;
-                rainProgress = 8;
-                showRainReadyPopup();
+        } else if (points === 'bonus') {
+            // Trigger bonus game immediately if bonus is ready
+            if (bonusReady) {
+                updateScore(50);
+                showPointsPopup('+50', item.offsetLeft, item.offsetTop);
+                setTimeout(() => triggerBonusGame(), 500);
             }
-            updateRainDisplay();
-            updateScore(75);
-            showPointsPopup('+75', item.offsetLeft, item.offsetTop);
+        } else if (points === 'rain') {
+            // Trigger rain bonus immediately if rain is ready
+            if (rainReady) {
+                updateScore(75);
+                showPointsPopup('+75', item.offsetLeft, item.offsetTop);
+                setTimeout(() => triggerRainBonus(), 500);
+            }
         } else {
-            // Regular items also add to bonus progress occasionally
-            if (Math.random() < 0.15) { // 15% chance for bonus progress
+            // Regular items add to bonus progress only if not ready yet
+            if (!bonusReady && Math.random() < 0.08) { // 8% chance for bonus progress
                 bonusProgress++;
-                if (bonusProgress >= 15 && !bonusReady) {
+                if (bonusProgress >= 15) {
                     bonusReady = true;
                     bonusProgress = 15;
                     showBonusReadyPopup();
                 }
                 updateBonusDisplay();
+            }
+            
+            // Regular items add to rain progress only if not ready yet
+            if (!rainReady && Math.random() < 0.05) { // 5% chance for rain progress
+                rainProgress++;
+                if (rainProgress >= 8) {
+                    rainReady = true;
+                    rainProgress = 8;
+                    showRainReadyPopup();
+                }
+                updateRainDisplay();
             }
             
             updateScore(points);

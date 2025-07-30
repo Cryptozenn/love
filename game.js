@@ -67,7 +67,7 @@ const hearts = ['💖', '💕', '💗', '💝', '💘', '💞'];
 const kisses = ['💋', '😘', '😗', '💏'];
 const bonusHeartColors = ['💖', '💕', '💗', '💝', '💘'];
 const timerItems = ['⏰', '⏱️', '⌚'];
-const rainTriggerItems = ['🎀', '💎', '🎁💜'];
+const rainTriggerItems = ['🎀', '💎', '🎁'];
 
 const loveLevels = [
     { level: 1, name: "Beginner", pointsNeeded: 100 },
@@ -1152,11 +1152,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('restartBtn').addEventListener('click', restartGame);
     document.getElementById('submitScoreBtn').addEventListener('click', submitHighScore);
     
-    document.getElementById('playerName').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            submitHighScore();
-        }
-    });
+    const playerNameInput = document.getElementById('playerName');
+    if (playerNameInput) {
+        playerNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitHighScore();
+            }
+        });
+    }
     
     highScoresModal.addEventListener('click', (e) => {
         if (e.target === highScoresModal) {

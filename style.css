@@ -166,13 +166,13 @@ body {
 }
 
 /* Item Sizes */
-.heart-small { font-size: 20px; }
-.heart-medium { font-size: 30px; }
-.heart-large { font-size: 40px; }
+.heart-small { font-size: 40px; }
+.heart-medium { font-size: 60px; }
+.heart-large { font-size: 80px; }
 
-.kiss-small { font-size: 18px; }
-.kiss-medium { font-size: 28px; }
-.kiss-large { font-size: 38px; }
+.kiss-small { font-size: 36px; }
+.kiss-medium { font-size: 56px; }
+.kiss-large { font-size: 76px; }
 
 .timer-item { 
     font-size: 25px; 

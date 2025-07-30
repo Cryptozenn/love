@@ -749,6 +749,12 @@ body {
 
 /* Mobile Responsive Design */
 @media (max-width: 768px) {
+    body {
+        background: linear-gradient(135deg, #ff6b9d, #ffc3e0, #ff9ff3, #f368e0) !important;
+        background-size: 400% 400% !important;
+        animation: gradientShift 4s ease-in-out infinite !important;
+    }
+    
     .title {
         font-size: 18px;
         margin-bottom: 5px;
@@ -772,6 +778,10 @@ body {
         right: 10px;
         padding: 12px;
         min-width: 100px;
+    }
+    
+    .bonus-meter, .rain-meter {
+        display: block !important;
     }
     
     .love-level {
@@ -955,6 +965,13 @@ body {
 }
 
 @media (max-width: 480px) {
+    body {
+        background: linear-gradient(135deg, #ff6b9d, #ffc3e0, #ff9ff3, #f368e0) !important;
+        background-size: 400% 400% !important;
+        animation: gradientShift 4s ease-in-out infinite !important;
+        min-height: 100vh !important;
+    }
+    
     .title {
         font-size: 16px;
     }

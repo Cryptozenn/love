@@ -756,97 +756,125 @@ body {
     }
     
     .title {
-        font-size: 18px;
-        margin-bottom: 5px;
+        font-size: 20px;
+        margin-bottom: 8px;
     }
     
     .game-stats {
-        gap: 10px;
+        gap: 12px;
     }
     
     .score, .timer, .current-level {
+        font-size: 16px;
+    }
+    
+    .bonus-indicator, .rain-indicator {
         font-size: 14px;
     }
     
     .header {
-        padding: 12px 20px;
+        padding: 15px 25px;
         top: 15px;
     }
     
     .love-meter {
-        top: 100px;
+        top: 110px;
         right: 10px;
-        padding: 12px;
-        min-width: 100px;
+        padding: 15px;
+        min-width: 130px;
     }
     
     .bonus-meter, .rain-meter {
         display: block !important;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 2px solid #ffcdd2;
     }
     
-    .love-level {
-        font-size: 11px;
-        margin-bottom: 6px;
-    }
-    
-    .heart-meter {
-        width: 80px;
-        height: 10px;
-        margin-bottom: 6px;
-    }
-    
-    .level-progress {
-        font-size: 10px;
-    }
-    
-    .instructions {
-        font-size: 11px;
-        padding: 10px 15px;
-        bottom: 15px;
-    }
-    
-    .start-title {
-        font-size: 28px;
-        margin-bottom: 15px;
-    }
-    
-    .start-instructions {
-        font-size: 14px;
-        margin-bottom: 15px;
-    }
-    
-    .top-three-display {
-        padding: 12px;
-        margin: 12px 0;
-    }
-    
-    .top-three-title {
-        font-size: 14px;
+    .bonus-bar, .rain-bar {
+        width: 100px;
+        height: 12px;
+        border-radius: 8px;
+        border: 2px solid #ff9800;
         margin-bottom: 8px;
     }
     
-    .top-three-list {
+    .rain-bar {
+        border-color: #9c27b0;
+    }
+    
+    .bonus-text, .rain-text {
         font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .love-level {
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+    
+    .heart-meter {
+        width: 100px;
+        height: 12px;
+        margin-bottom: 8px;
+    }
+    
+    .level-progress {
+        font-size: 11px;
+    }
+    
+    .instructions {
+        font-size: 13px;
+        padding: 12px 18px;
+        bottom: 15px;
+        line-height: 1.4;
+    }
+    
+    .start-title {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+    
+    .start-instructions {
+        font-size: 16px;
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+    
+    .top-three-display {
+        padding: 15px;
+        margin: 15px 0;
+    }
+    
+    .top-three-title {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .top-three-list {
+        font-size: 14px;
+        line-height: 1.5;
     }
     
     .start-btn, .restart-btn {
-        font-size: 14px;
-        padding: 12px 20px;
+        font-size: 16px;
+        padding: 15px 25px;
     }
     
     .high-scores-btn {
-        font-size: 12px;
-        padding: 10px 15px;
+        font-size: 14px;
+        padding: 12px 18px;
     }
     
     .sound-toggle, .high-scores-toggle {
         top: 15px;
-        padding: 8px;
-        font-size: 18px;
+        padding: 10px;
+        font-size: 20px;
     }
     
     .high-scores-toggle {
-        right: 60px;
+        right: 65px;
     }
     
     .sound-toggle {
@@ -854,113 +882,124 @@ body {
     }
     
     .bonus-title {
-        font-size: 20px;
+        font-size: 22px;
     }
     
     .bonus-timer {
-        font-size: 16px;
-    }
-    
-    .rain-title {
-        font-size: 24px;
-    }
-    
-    .rain-timer {
         font-size: 18px;
     }
     
+    .rain-title {
+        font-size: 26px;
+    }
+    
+    .rain-timer {
+        font-size: 20px;
+    }
+    
     .shooter {
-        width: 50px;
-        height: 50px;
-        font-size: 35px;
+        width: 55px;
+        height: 55px;
+        font-size: 38px;
     }
     
     .bubble-heart {
-        width: 40px;
-        height: 40px;
-        font-size: 25px;
+        width: 45px;
+        height: 45px;
+        font-size: 30px;
     }
     
     .shooting-heart {
-        width: 40px;
-        height: 40px;
-        font-size: 25px;
+        width: 45px;
+        height: 45px;
+        font-size: 30px;
     }
     
     .rain-multiplier {
         left: 10px;
-        padding: 10px;
-        font-size: 14px;
+        padding: 12px;
+        font-size: 16px;
     }
     
     .high-scores-content, .game-over-content {
-        padding: 20px;
+        padding: 25px;
         width: 95%;
     }
     
     .high-scores-title {
-        font-size: 20px;
-        margin-bottom: 15px;
+        font-size: 22px;
+        margin-bottom: 18px;
     }
     
     .score-entry {
-        padding: 8px 12px;
-        margin: 3px 0;
+        padding: 10px 15px;
+        margin: 5px 0;
     }
     
     .rank {
-        font-size: 14px;
-        min-width: 30px;
+        font-size: 16px;
+        min-width: 35px;
     }
     
     .player-name {
-        margin-left: 10px;
-        font-size: 14px;
+        margin-left: 12px;
+        font-size: 16px;
     }
     
     .player-score {
-        font-size: 12px;
+        font-size: 14px;
     }
     
     .badge {
-        font-size: 16px;
-        margin-left: 8px;
+        font-size: 18px;
+        margin-left: 10px;
     }
     
     .name-input input {
-        width: 180px;
-        font-size: 14px;
-        padding: 8px 12px;
+        width: 200px;
+        font-size: 16px;
+        padding: 10px 15px;
     }
     
     .final-score, .final-level {
-        font-size: 16px;
-    }
-    
-    .score-message {
-        font-size: 14px;
-        margin: 15px 0;
-    }
-    
-    .new-record-text {
-        font-size: 16px;
-    }
-    
-    .score-stats {
-        padding: 12px;
-        font-size: 12px;
-    }
-    
-    .falling-item {
-        transform: scale(0.9);
-    }
-    
-    .points-popup {
         font-size: 18px;
     }
     
+    .score-message {
+        font-size: 16px;
+        margin: 18px 0;
+    }
+    
+    .new-record-text {
+        font-size: 18px;
+    }
+    
+    .score-stats {
+        padding: 15px;
+        font-size: 14px;
+    }
+    
+    .falling-item {
+        font-size: 1.2em !important;
+    }
+    
+    .heart-small { font-size: 24px !important; }
+    .heart-medium { font-size: 34px !important; }
+    .heart-large { font-size: 44px !important; }
+    
+    .kiss-small { font-size: 22px !important; }
+    .kiss-medium { font-size: 32px !important; }
+    .kiss-large { font-size: 42px !important; }
+    
+    .timer-item { font-size: 28px !important; }
+    .rain-trigger-item { font-size: 38px !important; }
+    
+    .points-popup {
+        font-size: 22px;
+    }
+    
     .time-bonus-popup {
-        font-size: 20px;
+        font-size: 26px;
     }
 }
 
@@ -973,65 +1012,81 @@ body {
     }
     
     .title {
-        font-size: 16px;
+        font-size: 18px;
     }
     
     .score, .timer, .current-level {
-        font-size: 12px;
+        font-size: 14px;
     }
     
     .header {
-        padding: 10px 15px;
+        padding: 12px 18px;
     }
     
     .love-meter {
-        padding: 10px;
-        min-width: 90px;
+        padding: 12px;
+        min-width: 110px;
     }
     
     .heart-meter {
-        width: 70px;
-        height: 8px;
+        width: 85px;
+        height: 10px;
+    }
+    
+    .bonus-bar, .rain-bar {
+        width: 85px;
+        height: 10px;
     }
     
     .instructions {
-        font-size: 10px;
-        padding: 8px 12px;
+        font-size: 11px;
+        padding: 10px 15px;
     }
     
     .start-title {
-        font-size: 24px;
+        font-size: 28px;
     }
     
     .start-instructions {
-        font-size: 12px;
+        font-size: 14px;
     }
     
     .falling-item {
-        transform: scale(0.8);
+        font-size: 1.1em !important;
     }
     
+    .heart-small { font-size: 22px !important; }
+    .heart-medium { font-size: 30px !important; }
+    .heart-large { font-size: 38px !important; }
+    
+    .kiss-small { font-size: 20px !important; }
+    .kiss-medium { font-size: 28px !important; }
+    .kiss-large { font-size: 36px !important; }
+    
+    .timer-item { font-size: 25px !important; }
+    .rain-trigger-item { font-size: 32px !important; }
+    
     .bubble-heart {
-        width: 35px;
-        height: 35px;
-        font-size: 22px;
+        width: 40px;
+        height: 40px;
+        font-size: 26px;
     }
     
     .shooter {
-        width: 45px;
-        height: 45px;
-        font-size: 30px;
+        width: 50px;
+        height: 50px;
+        font-size: 34px;
     }
     
     .shooting-heart {
-        width: 35px;
-        height: 35px;
-        font-size: 22px;
+        width: 40px;
+        height: 40px;
+        font-size: 26px;
     }
     
     .rain-multiplier {
-        font-size: 12px;
-        padding: 8px;
+        font-size: 14px;
+        padding: 10px;
     }
 }
 

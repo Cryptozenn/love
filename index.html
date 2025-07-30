@@ -144,6 +144,43 @@
         </div>
     </div>
 
+    <script>
+        console.log('Loading game.js...');
+        
+        // Temporary inline code to debug
+        function startGameDebug() {
+            console.log('Start game clicked!');
+            alert('Start game button works!');
+        }
+        
+        function showHighScoresDebug() {
+            console.log('High scores clicked!');
+            alert('High scores button works!');
+        }
+        
+        // Add event listeners directly
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            
+            const startBtn = document.getElementById('startBtn');
+            const highScoresBtn = document.getElementById('viewHighScoresBtn');
+            
+            if (startBtn) {
+                console.log('Start button found');
+                startBtn.addEventListener('click', startGameDebug);
+            } else {
+                console.log('Start button NOT found');
+            }
+            
+            if (highScoresBtn) {
+                console.log('High scores button found');
+                highScoresBtn.addEventListener('click', showHighScoresDebug);
+            } else {
+                console.log('High scores button NOT found');
+            }
+        });
+    </script>
+    
     <script src="game.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How Much Do You Love Me? 💕</title>
+    <title>I Love You More 💕</title>
     <style>
         * {
             margin: 0;
@@ -227,23 +227,23 @@
             75% { transform: translateX(-10px) rotate(-5deg); }
         }
 
-        /* Item Sizes - 3x groter */
-        .heart-small { font-size: 60px; }
-        .heart-medium { font-size: 90px; }
-        .heart-large { font-size: 120px; }
+        /* Item Sizes - 30% kleiner gemaakt */
+        .heart-small { font-size: 42px; }
+        .heart-medium { font-size: 63px; }
+        .heart-large { font-size: 84px; }
 
-        .kiss-small { font-size: 54px; }
-        .kiss-medium { font-size: 84px; }
-        .kiss-large { font-size: 114px; }
+        .kiss-small { font-size: 38px; }
+        .kiss-medium { font-size: 59px; }
+        .kiss-large { font-size: 80px; }
 
         .timer-item { 
-            font-size: 75px; 
+            font-size: 53px; 
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             animation: fall linear, timerGlow 1s ease-in-out infinite;
         }
 
         .rain-trigger-item, .bonus-item {
-            font-size: 105px;
+            font-size: 74px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             animation: fall linear, rainGlow 1.2s ease-in-out infinite;
         }
@@ -811,6 +811,12 @@
 
         /* Mobile Responsive Design */
         @media (max-width: 768px) {
+            body {
+                background: linear-gradient(135deg, #ff6b9d, #ffc3e0, #ff9ff3, #f368e0) !important;
+                background-size: 400% 400% !important;
+                animation: gradientShift 4s ease-in-out infinite !important;
+            }
+            
             .title {
                 font-size: 18px;
                 margin-bottom: 6px;
@@ -829,21 +835,61 @@
                 top: 15px;
             }
             
+            /* Mobile: Eén compact score blok */
             .love-meter {
-                top: 100px;
+                position: fixed;
+                top: 15px;
+                left: 15px;
                 right: 15px;
+                background: rgba(255, 255, 255, 0.95);
                 padding: 12px;
-                min-width: 110px;
+                border-radius: 15px;
+                text-align: center;
+                z-index: 1000;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                backdrop-filter: blur(10px);
+            }
+            
+            .mobile-score-block {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #e91e63;
+            }
+            
+            .mobile-level-info {
+                text-align: center;
+                font-size: 14px;
+                color: #ad1457;
+                margin-bottom: 8px;
             }
             
             .heart-meter {
-                width: 90px;
-                height: 10px;
+                width: 100%;
+                height: 8px;
+                margin: 0;
             }
             
-            .bonus-bar, .rain-bar {
-                width: 90px;
-                height: 10px;
+            .level-progress {
+                font-size: 11px;
+                margin-top: 5px;
+            }
+            
+            /* Verberg desktop header op mobile */
+            .header {
+                display: none;
+            }
+            
+            /* Verberg bonus/rain meters op mobile voor ruimte */
+            .bonus-meter, .rain-meter {
+                display: none;
+            }
+            
+            .love-level {
+                display: none;
             }
             
             .instructions {
@@ -860,17 +906,17 @@
                 font-size: 14px;
             }
             
-            /* Mobile item sizes - iets kleiner op mobile maar nog steeds 3x origineel */
-            .heart-small { font-size: 50px !important; }
-            .heart-medium { font-size: 75px !important; }
-            .heart-large { font-size: 100px !important; }
+            /* Mobile item sizes - kleiner voor moeilijkheid */
+            .heart-small { font-size: 30px !important; }
+            .heart-medium { font-size: 45px !important; }
+            .heart-large { font-size: 60px !important; }
 
-            .kiss-small { font-size: 45px !important; }
-            .kiss-medium { font-size: 70px !important; }
-            .kiss-large { font-size: 95px !important; }
+            .kiss-small { font-size: 28px !important; }
+            .kiss-medium { font-size: 42px !important; }
+            .kiss-large { font-size: 56px !important; }
 
-            .timer-item { font-size: 65px !important; }
-            .rain-trigger-item, .bonus-item { font-size: 85px !important; }
+            .timer-item { font-size: 38px !important; }
+            .rain-trigger-item, .bonus-item { font-size: 52px !important; }
         }
 
         .hidden {
@@ -915,7 +961,7 @@
 
     <!-- Start Screen -->
     <div class="start-screen" id="startScreen">
-        <div class="start-title">💕 How Much Do You Love Me? 💕</div>
+        <div class="start-title">💕 I Love You More 💕</div>
         <div class="start-instructions">
             Catch as many hearts and kisses as possible in 60 seconds!<br>
             Reach different love levels and unlock bonus games<br><br>
@@ -939,7 +985,7 @@
     <!-- Main Game Area -->
     <div class="game-container" id="gameArea">
         <div class="header">
-            <div class="title">💕 How Much Do You Love Me? 💕</div>
+            <div class="title">💕 I Love You More 💕</div>
             <div class="game-stats">
                 <div class="score">Score: <span id="score">0</span></div>
                 <div class="timer">Time: <span id="timer">60</span>s</div>
@@ -950,6 +996,16 @@
         </div>
 
         <div class="love-meter">
+            <!-- Mobile compact score block -->
+            <div class="mobile-score-block" style="display: none;">
+                <div>Score: <span id="mobileScore">0</span></div>
+                <div>Time: <span id="mobileTimer">60</span>s</div>
+            </div>
+            <div class="mobile-level-info" style="display: none;">
+                Level <span id="mobileCurrentLevel">1</span>: <span id="mobileLevelName">Beginner</span>
+            </div>
+            
+            <!-- Desktop love meter -->
             <div class="love-level" id="loveLevel">Beginner</div>
             <div class="heart-meter">
                 <div class="heart-fill" id="heartFill"></div>
@@ -975,7 +1031,7 @@
 
         <div class="instructions">
             Click on hearts 💖, kisses 💋, timers ⏰ and gifts 🎀!<br>
-            Level up = +10 seconds! Fill meters for bonus games! 🎯🌧️
+            Level up = +time! Fill meters for bonus games! 🎯🌧️
         </div>
     </div>
 
@@ -1089,16 +1145,27 @@
         const rainTriggerItems = ['🎀', '💎', '🎁'];
 
         const loveLevels = [
-            { level: 1, name: "Beginner", pointsNeeded: 100 },
-            { level: 2, name: "A Little in Love", pointsNeeded: 200 },
-            { level: 3, name: "In Love", pointsNeeded: 350 },
-            { level: 4, name: "Very Much in Love", pointsNeeded: 550 },
-            { level: 5, name: "Head Over Heels", pointsNeeded: 800 },
-            { level: 6, name: "Unconditional Love", pointsNeeded: 1100 },
-            { level: 7, name: "Soulmates", pointsNeeded: 1500 },
-            { level: 8, name: "Eternal Love", pointsNeeded: 2000 },
-            { level: 9, name: "Cosmic Connection", pointsNeeded: 2600 },
-            { level: 10, name: "Ultimate Love", pointsNeeded: 3300 }
+            { level: 1, name: "Beginner", pointsNeeded: 100, timeBonus: 10 },
+            { level: 2, name: "A Little in Love", pointsNeeded: 200, timeBonus: 9 },
+            { level: 3, name: "In Love", pointsNeeded: 350, timeBonus: 8 },
+            { level: 4, name: "Very Much in Love", pointsNeeded: 550, timeBonus: 7 },
+            { level: 5, name: "Head Over Heels", pointsNeeded: 800, timeBonus: 6 },
+            { level: 6, name: "Unconditional Love", pointsNeeded: 1100, timeBonus: 5 },
+            { level: 7, name: "Soulmates", pointsNeeded: 1500, timeBonus: 4 },
+            { level: 8, name: "Eternal Love", pointsNeeded: 2000, timeBonus: 3 },
+            { level: 9, name: "Cosmic Connection", pointsNeeded: 2600, timeBonus: 2 },
+            { level: 10, name: "Ultimate Love", pointsNeeded: 3300, timeBonus: 1 },
+            // Nieuwe levels na 10
+            { level: 11, name: "Divine Love", pointsNeeded: 4100, timeBonus: 1 },
+            { level: 12, name: "Transcendent Love", pointsNeeded: 5000, timeBonus: 1 },
+            { level: 13, name: "Infinite Love", pointsNeeded: 6000, timeBonus: 1 },
+            { level: 14, name: "Universal Love", pointsNeeded: 7200, timeBonus: 1 },
+            { level: 15, name: "Omnipotent Love", pointsNeeded: 8600, timeBonus: 1 },
+            { level: 16, name: "Love Master", pointsNeeded: 10200, timeBonus: 1 },
+            { level: 17, name: "Love Wizard", pointsNeeded: 12000, timeBonus: 1 },
+            { level: 18, name: "Love God", pointsNeeded: 14000, timeBonus: 1 },
+            { level: 19, name: "Love Legend", pointsNeeded: 16500, timeBonus: 1 },
+            { level: 20, name: "Love Immortal", pointsNeeded: 20000, timeBonus: 1 }
         ];
 
         // Sound functions
@@ -1450,14 +1517,23 @@
         function checkLevelUp() {
             const nextLevel = loveLevels.find(level => level.level === currentLevel + 1);
             if (nextLevel && score >= nextLevel.pointsNeeded) {
+                const currentLevelData = loveLevels.find(level => level.level === currentLevel);
+                const timeBonus = currentLevelData ? currentLevelData.timeBonus : 1;
+                
                 currentLevel++;
                 currentLevelElement.textContent = currentLevel;
                 loveLevelElement.textContent = nextLevel.name;
                 
-                addTime(10);
+                // Update mobile level info
+                const mobileLevel = document.getElementById('mobileCurrentLevel');
+                const mobileLevelName = document.getElementById('mobileLevelName');
+                if (mobileLevel) mobileLevel.textContent = currentLevel;
+                if (mobileLevelName) mobileLevelName.textContent = nextLevel.name;
+                
+                addTime(timeBonus);
                 playLevelUpSound();
                 
-                showLevelUpPopup(nextLevel.name);
+                showLevelUpPopup(nextLevel.name, timeBonus);
                 createConfettiExplosion();
                 
                 updateLevelProgress();
@@ -1482,13 +1558,13 @@
             }
         }
 
-        function showLevelUpPopup(levelName) {
+        function showLevelUpPopup(levelName, timeBonus) {
             const popup = document.createElement('div');
             popup.classList.add('level-up-popup');
             popup.innerHTML = `
                 🎉 LEVEL UP! 🎉<br>
                 <div style="font-size: 18px; margin-top: 10px;">${levelName}</div>
-                <div style="font-size: 16px; margin-top: 5px; color: #4caf50;">+10 seconds bonus!</div>
+                <div style="font-size: 16px; margin-top: 5px; color: #4caf50;">+${timeBonus} seconds bonus!</div>
             `;
             
             document.body.appendChild(popup);
@@ -1594,6 +1670,21 @@
             scoreElement.textContent = score;
             timerElement.textContent = timeLeft;
             currentLevelElement.textContent = currentLevel;
+            
+            // Update mobile elements
+            const mobileScore = document.getElementById('mobileScore');
+            const mobileTimer = document.getElementById('mobileTimer');
+            const mobileLevel = document.getElementById('mobileCurrentLevel');
+            const mobileLevelName = document.getElementById('mobileLevelName');
+            
+            if (mobileScore) mobileScore.textContent = score;
+            if (mobileTimer) mobileTimer.textContent = timeLeft;
+            if (mobileLevel) mobileLevel.textContent = currentLevel;
+            if (mobileLevelName) {
+                const currentLevelData = loveLevels.find(level => level.level === currentLevel);
+                if (currentLevelData) mobileLevelName.textContent = currentLevelData.name;
+            }
+            
             updateLevelProgress();
         }
 
@@ -2142,6 +2233,19 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadHighScores();
             updateTopThreeDisplay();
+            
+            // Show/hide mobile elements
+            function updateMobileDisplay() {
+                const isMobile = window.innerWidth <= 768;
+                const mobileElements = document.querySelectorAll('.mobile-score-block, .mobile-level-info');
+                
+                mobileElements.forEach(el => {
+                    el.style.display = isMobile ? 'block' : 'none';
+                });
+            }
+            
+            updateMobileDisplay();
+            window.addEventListener('resize', updateMobileDisplay);
             
             document.getElementById('startBtn').addEventListener('click', startGame);
             soundToggle.addEventListener('click', toggleSound);

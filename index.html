@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoeveel Houd Je Van Mij? 💕</title>
+    <title>How Much Do You Love Me? 💕</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,75 +17,93 @@
     <!-- Bonus Bubble Shooter Game -->
     <div class="bonus-game" id="bonusGame">
         <div class="bonus-header">
-            <div class="bonus-title">🎯 BONUS HARTJES SHOOTER! 🎯</div>
-            <div class="bonus-timer">Bonus Tijd: <span id="bonusTimer">15</span>s</div>
-            <div style="font-size: 16px; margin-top: 5px;">Match hartjes van dezelfde kleur!</div>
+            <div class="bonus-title">🎯 BONUS HEART SHOOTER! 🎯</div>
+            <div class="bonus-timer">Bonus Time: <span id="bonusTimer">15</span>s</div>
+            <div style="font-size: 16px; margin-top: 5px;">Match hearts of the same color!</div>
         </div>
         
         <div class="shooter-container">
             <div class="shooter" id="shooter">💕</div>
-            <div style="margin-top: 10px; color: white; font-size: 14px;">Klik om te schieten!</div>
+            <div style="margin-top: 10px; color: white; font-size: 14px;">Click to shoot!</div>
         </div>
     </div>
 
     <!-- Rain Bonus Game -->
     <div class="rain-bonus" id="rainBonus">
         <div class="rain-header">
-            <div class="rain-title">🌧️ REGEN VAN LIEFDE! 🌧️</div>
-            <div class="rain-timer">Regen Tijd: <span id="rainTimer">15</span>s</div>
-            <div style="font-size: 16px; margin-top: 5px;">Vang ALLES wat valt! Dubbele punten!</div>
+            <div class="rain-title">🌧️ LOVE RAIN! 🌧️</div>
+            <div class="rain-timer">Rain Time: <span id="rainTimer">15</span>s</div>
+            <div style="font-size: 16px; margin-top: 5px;">Catch EVERYTHING that falls! Double points!</div>
         </div>
         
         <div class="rain-multiplier">
-            2x PUNTEN! 🌟
+            2x POINTS! 🌟
         </div>
     </div>
 
     <!-- Start Screen -->
     <div class="start-screen" id="startScreen">
-        <div class="start-title">💕 Hoeveel Houd Je Van Mij? 💕</div>
+        <div class="start-title">💕 How Much Do You Love Me? 💕</div>
         <div class="start-instructions">
-            Vang zoveel mogelijk hartjes en kusjes in 60 seconden!<br>
-            Bereik verschillende liefde-levels en ontgrendel Bonus levels<br><br>
-            <strong>Punten:</strong><br>
-            Kleine hartjes: 5 punten | Grote hartjes: 20 punten<br>
-            Kleine kusjes: 8 punten | Grote kusjes: 25 punten<br>
-            <strong>Speciaal:</strong> ⏰ +5 seconden | 🎁 Bonus shooter<br>
-            <strong>NIEUW:</strong> 🎀 Vang voor REGEN VAN LIEFDE bonus! 🌧️
+            Catch as many hearts and kisses as possible in 60 seconds!<br>
+            Reach different love levels and unlock bonus games<br><br>
+            <strong>Points:</strong><br>
+            Small hearts: 5 points | Large hearts: 20 points<br>
+            Small kisses: 8 points | Large kisses: 25 points<br>
+            <strong>Special:</strong> ⏰ +5 seconds | 🎁 Bonus shooter<br>
+            <strong>NEW:</strong> 🎀 Catch for LOVE RAIN bonus! 🌧️
         </div>
         
         <!-- Top 3 Display -->
         <div id="topThreeDisplay" class="top-three-display">
-            <div class="top-three-title">🏆 Top 3 Spelers</div>
+            <div class="top-three-title">🏆 Top 3 Players</div>
             <div id="topThreeList"></div>
         </div>
         
-        <button class="start-btn" id="startBtn">Start Spelletje! 🚀</button>
-        <button class="high-scores-btn" id="viewHighScoresBtn">📋 Bekijk Top 10</button>
+        <button class="start-btn" id="startBtn">Start Game! 🚀</button>
+        <button class="high-scores-btn" id="viewHighScoresBtn">📋 View Top 10</button>
     </div>
     
     <!-- Main Game Area -->
     <div class="game-container" id="gameArea">
         <div class="header">
-            <div class="title">💕 Hoeveel Houd Je Van Mij? 💕</div>
+            <div class="title">💕 How Much Do You Love Me? 💕</div>
             <div class="game-stats">
                 <div class="score">Score: <span id="score">0</span></div>
-                <div class="timer">Tijd: <span id="timer">60</span>s</div>
+                <div class="timer">Time: <span id="timer">60</span>s</div>
                 <div class="current-level">Level: <span id="currentLevel">1</span></div>
+                <div class="bonus-indicator" id="bonusIndicator" style="display: none;">BONUS READY! 🎯</div>
+                <div class="rain-indicator" id="rainIndicator" style="display: none;">RAIN READY! 🌧️</div>
             </div>
         </div>
 
         <div class="love-meter">
-            <div class="love-level" id="loveLevel">Beginnend</div>
+            <div class="love-level" id="loveLevel">Beginner</div>
             <div class="heart-meter">
                 <div class="heart-fill" id="heartFill"></div>
             </div>
             <div class="level-progress" id="levelProgress">0/100</div>
+            
+            <div class="bonus-meter">
+                <div class="bonus-text">Bonus Meter</div>
+                <div class="bonus-bar">
+                    <div class="bonus-fill" id="bonusFill"></div>
+                </div>
+                <div class="bonus-text" id="bonusProgress">0/15</div>
+            </div>
+
+            <div class="rain-meter">
+                <div class="rain-text">Rain Meter</div>
+                <div class="rain-bar">
+                    <div class="rain-fill" id="rainFill"></div>
+                </div>
+                <div class="rain-text" id="rainProgress">0/8</div>
+            </div>
         </div>
 
         <div class="instructions">
-            Klik op hartjes 💖, kusjes 💋, timers ⏰ en cadeautjes 🎀!<br>
-            Level up = +10 seconden! Vang cadeautjes voor bonus games! 🎯🌧️
+            Click on hearts 💖, kisses 💋, timers ⏰ and gifts 🎀!<br>
+            Level up = +10 seconds! Fill meters for bonus games! 🎯🌧️
         </div>
     </div>
 
@@ -93,35 +111,35 @@
     <div class="high-scores-modal" id="highScoresModal">
         <div class="high-scores-content">
             <button class="close-btn" id="closeHighScores">×</button>
-            <div class="high-scores-title">🏆 TOP 10 LIEFDE SCORES 🏆</div>
+            <div class="high-scores-title">🏆 TOP 10 LOVE SCORES 🏆</div>
             <div id="highScoresList"></div>
             <div class="score-stats" id="scoreStats"></div>
-            <button class="clear-scores-btn" id="clearScoresBtn">🗑️ Wis Alle Scores</button>
+            <button class="clear-scores-btn" id="clearScoresBtn">🗑️ Clear All Scores</button>
         </div>
     </div>
 
     <!-- Game Over Modal -->
     <div class="game-over-modal" id="gameOverModal">
         <div class="game-over-content">
-            <h2>🎮 Spelletje Afgelopen! 🎮</h2>
-            <div class="final-score">Jouw finale score: <span id="finalScore">0</span> punten</div>
-            <div class="final-level">Jouw liefde level: <span id="finalLevel">Beginnend</span></div>
+            <h2>🎮 Game Over! 🎮</h2>
+            <div class="final-score">Your final score: <span id="finalScore">0</span> points</div>
+            <div class="final-level">Your love level: <span id="finalLevel">Beginner</span></div>
             <div class="score-message" id="scoreMessage"></div>
             
-            <!-- High Score Input (alleen zichtbaar bij nieuwe record) -->
+            <!-- High Score Input (only visible for new record) -->
             <div class="new-record" id="newRecordSection" style="display: none;">
-                <div class="new-record-text">🎉 NIEUWE HIGH SCORE! 🎉</div>
+                <div class="new-record-text">🎉 NEW HIGH SCORE! 🎉</div>
                 <div class="name-input">
-                    <div>Voer je naam in voor de Hall of Fame:</div>
-                    <input type="text" id="playerName" placeholder="Jouw naam..." maxlength="20">
-                    <button class="submit-score-btn" id="submitScoreBtn">💾 Score Opslaan</button>
+                    <div>Enter your name for the Hall of Fame:</div>
+                    <input type="text" id="playerName" placeholder="Your name..." maxlength="20">
+                    <button class="submit-score-btn" id="submitScoreBtn">💾 Save Score</button>
                 </div>
             </div>
             
             <!-- Regular Game Over Buttons -->
             <div class="game-over-buttons" id="gameOverButtons">
                 <button class="high-scores-btn" id="viewHighScoresFromGameOver">🏆 High Scores</button>
-                <button class="restart-btn" id="restartBtn">Nog Een Keer Spelen! 🔄</button>
+                <button class="restart-btn" id="restartBtn">Play Again! 🔄</button>
             </div>
         </div>
     </div>

@@ -1643,8 +1643,6 @@
 
 
 
-
-
 <!-- Toevoeging aan love_game_extended.html -->
 <!-- Zet dit direct voor </body> -->
 
@@ -1666,12 +1664,14 @@
 </div>
 
 <script>
-    // Hardcoded persistent highscores array
-    let highscores = [
-        { name: "Genni", score: 300 },
-        { name: "Su", score: 250 },
-        { name: "Sumalee", score: 450 },
-    ];
+    // Simpele score array in geheugen (wordt niet opgeslagen buiten sessie)
+    if (!window.highscores) {
+        window.highscores = [
+            { name: "Genni", score: 300 },
+            { name: "Su", score: 250 },
+            { name: "Sumalee", score: 450 },
+        ];
+    }
 
     function showGameOver() {
         const finalLevel = loveLevels.find(level => level.level === currentLevel);
@@ -1681,10 +1681,10 @@
 
     function saveScore() {
         const name = document.getElementById("playerName").value.trim() || "Naamloos";
-        const existing = highscores.find(entry => entry.name.toLowerCase() === name.toLowerCase());
+        const existingIndex = highscores.findIndex(entry => entry.name.toLowerCase() === name.toLowerCase());
 
-        if (existing) {
-            existing.score = Math.max(existing.score, score);
+        if (existingIndex >= 0) {
+            highscores[existingIndex].score = Math.max(score, highscores[existingIndex].score);
         } else {
             highscores.push({ name, score });
         }
@@ -1737,17 +1737,30 @@
         document.getElementById("highscoreModal").style.display = "none";
         document.getElementById("highscoreBoard").style.display = "none";
         if (force) startScreen.style.display = 'flex';
-        else startScreen.style.display = 'flex';
     }
 
     document.addEventListener('DOMContentLoaded', populateTopThree);
 </script>
 
 <style>
+body {
+    background: linear-gradient(135deg, #ff9ff3, #f368e0, #ff6b9d) !important;
+    background-size: 400% 400%;
+    animation: gradientShift 6s ease infinite;
+}
+
 .bg-heart {
     pointer-events: none;
     opacity: 0.3 !important;
     filter: blur(1px);
+}
+
+/* Verberg de bonus- en regenmeters */
+.bonus-meter,
+.rain-meter,
+.bonus-indicator,
+.rain-indicator {
+    display: none !important;
 }
 
 @media (max-width: 768px) {
@@ -1770,8 +1783,12 @@
         font-size: 14px !important;
     }
 }
-</style>
 
+/* Bonus bubbels positioneren */
+.bubble-heart {
+    transform: translate(-50%, -50%);
+}
+</style>
 
 
 

@@ -1639,6 +1639,12 @@
 
     
 
+
+
+
+
+
+
 <!-- Toevoeging aan love_game_extended.html -->
 <!-- Zet dit direct voor </body> -->
 
@@ -1660,7 +1666,12 @@
 </div>
 
 <script>
-    let highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+    // Hardcoded persistent highscores array
+    let highscores = [
+        { name: "Genni", score: 300 },
+        { name: "Su", score: 250 },
+        { name: "Sumalee", score: 450 },
+    ];
 
     function showGameOver() {
         const finalLevel = loveLevels.find(level => level.level === currentLevel);
@@ -1670,10 +1681,16 @@
 
     function saveScore() {
         const name = document.getElementById("playerName").value.trim() || "Naamloos";
-        highscores.push({ name, score });
+        const existing = highscores.find(entry => entry.name.toLowerCase() === name.toLowerCase());
+
+        if (existing) {
+            existing.score = Math.max(existing.score, score);
+        } else {
+            highscores.push({ name, score });
+        }
+
         highscores.sort((a, b) => b.score - a.score);
         highscores = highscores.slice(0, 10);
-        localStorage.setItem("highscores", JSON.stringify(highscores));
 
         document.getElementById("highscoreModal").style.display = "none";
         showHighscores();
@@ -1723,12 +1740,10 @@
         else startScreen.style.display = 'flex';
     }
 
-    // Initialiseer top 3 wanneer geladen
     document.addEventListener('DOMContentLoaded', populateTopThree);
 </script>
 
 <style>
-/* Fix voor achtergrond emoji's op mobile */
 .bg-heart {
     pointer-events: none;
     opacity: 0.3 !important;
@@ -1756,6 +1771,13 @@
     }
 }
 </style>
+
+
+
+
+
+
+    
 
     
 </body>

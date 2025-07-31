@@ -1851,9 +1851,16 @@
                     }
                 }
             }, 1000);
+
+
             
             const spawnRate = window.innerWidth <= 768 ? 1200 : 800;
-            itemSpawnTimer = setInterval(createFallingItem, spawnRate);
+
+            itemSpawnTimer = setInterval(() => {
+    createFallingItem();
+    createFallingItem(); // tweede tegelijk
+}, window.innerWidth <= 768 ? 800 : 500);
+            
             backgroundTimer = setInterval(createBackgroundHeart, 2000);
             
             for (let i = 0; i < 5; i++) {

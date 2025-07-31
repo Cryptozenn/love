@@ -1856,10 +1856,8 @@
             
             const spawnRate = window.innerWidth <= 768 ? 1200 : 800;
 
-            itemSpawnTimer = setInterval(() => {
-    createFallingItem();
-    createFallingItem(); // tweede tegelijk
-}, window.innerWidth <= 768 ? 800 : 500);
+itemSpawnTimer = setInterval(createFallingItem, spawnRate);
+
             
             backgroundTimer = setInterval(createBackgroundHeart, 2000);
             

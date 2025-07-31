@@ -264,6 +264,23 @@
             animation: fall linear, rainGlow 1.2s ease-in-out infinite;
         }
 
+        .fire-item {
+            font-size: 45px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fall linear, fireGlow 0.8s ease-in-out infinite;
+        }
+
+        @keyframes fireGlow {
+            0%, 100% { 
+                filter: brightness(1) drop-shadow(0 0 8px #ff4500);
+                transform: scale(1);
+            }
+            50% { 
+                filter: brightness(1.8) drop-shadow(0 0 20px #ff6500) drop-shadow(0 0 30px #ff4500);
+                transform: scale(1.1);
+            }
+        }
+
         @keyframes timerGlow {
             0%, 100% { filter: brightness(1); }
             50% { filter: brightness(1.5) drop-shadow(0 0 10px #4caf50); }
@@ -1043,6 +1060,7 @@
 
             .timer-item { font-size: 38px !important; }
             .rain-trigger-item, .bonus-item { font-size: 52px !important; }
+            .fire-item { font-size: 38px !important; }
         }
 
         /* Special Effects */
@@ -1379,6 +1397,7 @@
         const bonusHeartColors = ['💖', '💕', '💗', '💝', '💘'];
         const timerItems = ['⏰', '⏱️', '⌚'];
         const rainTriggerItems = ['🎀', '💎', '🎁'];
+        const fireItems = ['🔥', '🌟', '💥']; // Nieuwe fire items!
 
         const loveLevels = [
             { level: 1, name: "Beginner", pointsNeeded: 100, timeBonus: 10 },
@@ -1497,6 +1516,18 @@
                         playSound(freq, 'sawtooth', 0.15, 0.05);
                     }, i * 60);
                 }
+            } else if (itemType === 'fire') {
+                // Fire/explosie geluid - krachtig en dramatisch
+                const fireNotes = [150, 200, 300, 400]; // Diepe bass tonen
+                fireNotes.forEach((note, index) => {
+                    setTimeout(() => {
+                        playSound(note, 'sawtooth', 0.3, 0.1);
+                        // Echo effect
+                        setTimeout(() => {
+                            playSound(note * 1.5, 'square', 0.2, 0.08);
+                        }, 100);
+                    }, index * 60);
+                });
             }
         }
 
@@ -1576,7 +1607,7 @@
                     saved = sessionStorage.getItem('loveGameHighScores');
                 }
                 
-                if (saved) {
+                     if (saved) {
                     highScores = JSON.parse(saved);
                 } else {
                     highScores = [
@@ -1879,6 +1910,7 @@
                 mobileTimer.textContent = timeLeft;
             }
             
+            console.log(`Added ${seconds} seconds! New time: ${timeLeft}`); // Debug log
             showTimeBonus(seconds);
             playTimeSound();
         }
@@ -1932,6 +1964,7 @@
                 if (mobileLevel) mobileLevel.textContent = currentLevel;
                 if (mobileLevelName) mobileLevelName.textContent = nextLevel.name;
                 
+                console.log(`LEVEL UP! Level ${currentLevel}, adding ${timeBonus} seconds`); // Debug log
                 addTime(timeBonus);
                 playLevelUpSound();
                 
@@ -2164,7 +2197,12 @@
             const itemType = Math.random();
             let emoji, points, sizeClass;
             
-            if (itemType < 0.015) {
+            if (itemType < 0.008) {
+                // Fire items (0.8% chance) - INSTANT RAIN!
+                emoji = fireItems[Math.floor(Math.random() * fireItems.length)];
+                sizeClass = 'fire-item';
+                points = 'fire';
+            } else if (itemType < 0.023) {
                 if (rainReady) {
                     emoji = rainTriggerItems[Math.floor(Math.random() * rainTriggerItems.length)];
                     sizeClass = 'rain-trigger-item';
@@ -2174,11 +2212,11 @@
                     sizeClass = 'heart-medium';
                     points = 10;
                 }
-            } else if (itemType < 0.08) { // Verhoogd van 0.04 naar 0.08 (meer timer items)
+            } else if (itemType < 0.12) { // Timer items - verhoogd van 0.08 naar 0.12 (meer timer items)
                 emoji = timerItems[Math.floor(Math.random() * timerItems.length)];
                 sizeClass = 'timer-item';
                 points = 'time';
-            } else if (itemType < 0.12) { // Verhoogd van 0.07 naar 0.12 (meer bonus items)
+            } else if (itemType < 0.18) { // Bonus items - verhoogd van 0.12 naar 0.18 (veel meer bonus items)
                 if (bonusReady) {
                     emoji = '🎁';
                     sizeClass = 'bonus-item';
@@ -2194,7 +2232,192 @@
                 if (size < 0.5) {
                     sizeClass = 'heart-small';
                     points = 5;
+                    sizeClass = 'heart-medium';
+                    points = 10;
+                } else {
+                    sizeClass = 'heart-large';
+                    points = 20;
+                }
+            } else {
+                emoji = kisses[Math.floor(Math.random() * kisses.length)];
+                const size = Math.random();
+                if (size < 0.5) {
+                    sizeClass = 'kiss-small';
+                    points = 8;
                 } else if (size < 0.8) {
+                    sizeClass = 'kiss-medium';
+                    points = 15;
+                } else {
+                    sizeClass = 'kiss-large';
+                    points = 25;
+                }
+            }
+                    sizeClass = 'heart-medium';
+                    points = 10;
+                } else {
+                    sizeClass = 'heart-large';
+                    points = 20;
+                }
+            } else {
+                emoji = kisses[Math.floor(Math.random() * kisses.length)];
+                const size = Math.random();
+                if (size < 0.5) {
+                    sizeClass = 'kiss-small';
+                    points = 8;
+                } else if (size < 0.8) {
+                    sizeClass = 'kiss-medium';
+                    points = 15;
+                } else {
+                    sizeClass = 'kiss-large';
+                    points = 25;
+                }
+            }
+            
+            item.textContent = emoji;
+            item.classList.add(sizeClass);
+            
+            // Verbeterde positionering - items verdeeld over hele breedte
+            const screenWidth = window.innerWidth;
+            const itemWidth = 100; // Geschatte item breedte
+            const margin = 20;
+            const spawnX = margin + Math.random() * (screenWidth - itemWidth - (margin * 2));
+            item.style.left = spawnX + 'px';
+            
+            // Variabele snelheden gebaseerd op level en item type
+            const baseSpeed = window.innerWidth <= 768 ? 3.5 : 2.5;
+            const levelMultiplier = 1 + (currentLevel * 0.1); // 10% sneller per level
+            const randomSpeed = 0.8 + Math.random() * 1.4; // 80% tot 220% van base speed
+            const finalSpeed = (baseSpeed / levelMultiplier) * randomSpeed;
+            
+            // Verschillende bewegingspatronen per item type
+            let driftAmount, rotationAmount, swayDuration;
+            
+            if (sizeClass.includes('timer') || sizeClass.includes('bonus') || sizeClass.includes('rain') || sizeClass.includes('fire')) {
+                // Speciale items: meer beweging om moeilijker te vangen
+                driftAmount = -100 + Math.random() * 200; // -100px tot +100px
+                rotationAmount = -180 + Math.random() * 360; // -180° tot +180°
+                swayDuration = 1.2 + Math.random() * 1.6; // 1.2s tot 2.8s
+            } else if (sizeClass.includes('large')) {
+                // Grote items: minder beweging, langzamer
+                driftAmount = -50 + Math.random() * 100; // -50px tot +50px
+                rotationAmount = -90 + Math.random() * 180; // -90° tot +90°
+                swayDuration = 2.5 + Math.random() * 1.5; // 2.5s tot 4s
+            } else if (sizeClass.includes('small')) {
+                // Kleine items: meer beweging, sneller
+                driftAmount = -80 + Math.random() * 160; // -80px tot +80px
+                rotationAmount = -270 + Math.random() * 540; // -270° tot +270°
+                swayDuration = 0.8 + Math.random() * 1.2; // 0.8s tot 2s
+            } else {
+                // Medium items: gemiddelde beweging
+                driftAmount = -60 + Math.random() * 120; // -60px tot +60px
+                rotationAmount = -135 + Math.random() * 270; // -135° tot +135°
+                swayDuration = 1.5 + Math.random() * 1.5; // 1.5s tot 3s
+            }
+            
+            // CSS custom properties voor complexere animaties
+            item.style.setProperty('--drift', driftAmount + 'px');
+            item.style.setProperty('--rotation', rotationAmount + 'deg');
+            item.style.animationDuration = `${finalSpeed}s, ${swayDuration}s`;
+            
+            // Verschillende timing delays voor meer natuurlijke spreiding
+            const delay = Math.random() * 0.5; // 0 tot 0.5 seconden delay
+            item.style.animationDelay = `${delay}s, 0s`;
+            
+            item.addEventListener('click', () => {
+                if (!gameActive || bonusActive || rainActive) return;
+                
+                const itemX = item.offsetLeft + (item.offsetWidth / 2);
+                const itemY = item.offsetTop + (item.offsetHeight / 2);
+                
+                // Speel verschillende geluiden en effecten per item type
+                if (points === 'fire') {
+                    // FIRE ITEM - INSTANT RAIN!
+                    playSpecialItemSound('fire');
+                    createSpecialEffect(itemX, itemY, 'fire-explosion', 'fire');
+                    updateScore(100); // Bonus punten voor fire item
+                    showPointsPopup('+100', item.offsetLeft, item.offsetTop);
+                    
+                    // Start rain onmiddellijk!
+                    setTimeout(() => {
+                        triggerInstantRain();
+                    }, 800); // Korte delay voor effect
+                    
+                } else if (points === 'time') {
+                    playSpecialItemSound('timer');
+                    createSpecialEffect(itemX, itemY, 'sparkles', 'timer');
+                    addTime(5);
+                    showPointsPopup('+5s', item.offsetLeft, item.offsetTop);
+                } else if (points === 'bonus') {
+                    if (bonusReady) {
+                        playSpecialItemSound('bonus');
+                        createSpecialEffect(itemX, itemY, 'magic-circle', 'bonus');
+                        createSpecialEffect(itemX, itemY, 'sparkles', 'bonus');
+                        updateScore(50);
+                        showPointsPopup('+50', item.offsetLeft, item.offsetTop);
+                        setTimeout(() => triggerBonusGame(), 500);
+                    }
+                } else if (points === 'rain') {
+                    if (rainReady) {
+                        playSpecialItemSound('rain');
+                        createSpecialEffect(itemX, itemY, 'magic-circle', 'rain');
+                        createSpecialEffect(itemX, itemY, 'sparkles', 'rain');
+                        updateScore(75);
+                        showPointsPopup('+75', item.offsetLeft, item.offsetTop);
+                        setTimeout(() => triggerRainBonus(), 500);
+                    }
+                } else {
+                    // Reguliere items - betere bonus progress kansen
+                    if (sizeClass.includes('heart')) {
+                        const heartSize = sizeClass.includes('small') ? 'small' : 
+                                        sizeClass.includes('large') ? 'large' : 'medium';
+                        playHeartSound(heartSize);
+                        createSpecialEffect(itemX, itemY, 'heart-burst', 'heart');
+                        
+                        // Hearts geven bonus progress
+                        if (!bonusReady && Math.random() < 0.25) { // 25% kans voor hearts
+                            bonusProgress++;
+                            if (bonusProgress >= 15) {
+                                bonusReady = true;
+                                bonusProgress = 15;
+                                showBonusReadyPopup();
+                            }
+                            updateBonusDisplay();
+                        }
+                        
+                    } else if (sizeClass.includes('kiss')) {
+                        const kissSize = sizeClass.includes('small') ? 'small' : 
+                                       sizeClass.includes('large') ? 'large' : 'medium';
+                        playKissSound(kissSize);
+                        createSpecialEffect(itemX, itemY, 'kiss-ripple', 'kiss');
+                        
+                        // Kisses geven rain progress
+                        if (!rainReady && Math.random() < 0.20) { // 20% kans voor kisses
+                            rainProgress++;
+                            if (rainProgress >= 8) {
+                                rainReady = true;
+                                rainProgress = 8;
+                                showRainReadyPopup();
+                            }
+                            updateRainDisplay();
+                        }
+                    }
+                    
+                    updateScore(points);
+                    showPointsPopup(points, item.offsetLeft, item.offsetTop);
+                }
+                
+                item.remove();
+                createCelebrationHearts(item.offsetLeft, item.offsetTop);
+            });
+            
+            gameArea.appendChild(item);
+            
+            setTimeout(() => {
+                if (item.parentNode) {
+                    item.remove();
+                }
+            }, (finalSpeed + delay) * 1000);
+        }
                     sizeClass = 'heart-medium';
                     points = 10;
                 } else {
@@ -2297,39 +2520,40 @@
                         setTimeout(() => triggerRainBonus(), 500);
                     }
                 } else {
-                    // Reguliere items - verschillende geluiden en effecten
+                    // Reguliere items - betere bonus progress kansen
                     if (sizeClass.includes('heart')) {
                         const heartSize = sizeClass.includes('small') ? 'small' : 
                                         sizeClass.includes('large') ? 'large' : 'medium';
                         playHeartSound(heartSize);
                         createSpecialEffect(itemX, itemY, 'heart-burst', 'heart');
+                        
+                        // Hearts geven bonus progress
+                        if (!bonusReady && Math.random() < 0.25) { // 25% kans voor hearts
+                            bonusProgress++;
+                            if (bonusProgress >= 15) {
+                                bonusReady = true;
+                                bonusProgress = 15;
+                                showBonusReadyPopup();
+                            }
+                            updateBonusDisplay();
+                        }
+                        
                     } else if (sizeClass.includes('kiss')) {
                         const kissSize = sizeClass.includes('small') ? 'small' : 
                                        sizeClass.includes('large') ? 'large' : 'medium';
                         playKissSound(kissSize);
                         createSpecialEffect(itemX, itemY, 'kiss-ripple', 'kiss');
-                    }
-                    
-                    // Makkelijker bonus halen - verhoogd van 0.08 naar 0.15
-                    if (!bonusReady && Math.random() < 0.15) {
-                        bonusProgress++;
-                        if (bonusProgress >= 15) {
-                            bonusReady = true;
-                            bonusProgress = 15;
-                            showBonusReadyPopup();
+                        
+                        // Kisses geven rain progress
+                        if (!rainReady && Math.random() < 0.20) { // 20% kans voor kisses
+                            rainProgress++;
+                            if (rainProgress >= 8) {
+                                rainReady = true;
+                                rainProgress = 8;
+                                showRainReadyPopup();
+                            }
+                            updateRainDisplay();
                         }
-                        updateBonusDisplay();
-                    }
-                    
-                    // Makkelijker rain halen - verhoogd van 0.05 naar 0.10
-                    if (!rainReady && Math.random() < 0.10) {
-                        rainProgress++;
-                        if (rainProgress >= 8) {
-                            rainReady = true;
-                            rainProgress = 8;
-                            showRainReadyPopup();
-                        }
-                        updateRainDisplay();
                     }
                     
                     updateScore(points);
@@ -2395,6 +2619,37 @@
                 container.appendChild(sparkleContainer);
                 setTimeout(() => sparkleContainer.remove(), 1500);
                 
+            } else if (effectType === 'fire-explosion') {
+                // Mega fire explosion effect
+                const explosionContainer = document.createElement('div');
+                explosionContainer.style.position = 'absolute';
+                explosionContainer.style.left = x + 'px';
+                explosionContainer.style.top = y + 'px';
+                explosionContainer.style.pointerEvents = 'none';
+                explosionContainer.style.zIndex = '1002';
+                
+                const fireColors = ['#ff4500', '#ff6500', '#ff8c00', '#ffa500', '#ffff00', '#ff0000'];
+                
+                // Grote fire burst
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const fire = document.createElement('div');
+                        fire.textContent = ['🔥', '💥', '✨', '🌟'][Math.floor(Math.random() * 4)];
+                        fire.style.position = 'absolute';
+                        fire.style.left = (Math.random() * 100 - 50) + 'px';
+                        fire.style.top = (Math.random() * 100 - 50) + 'px';
+                        fire.style.fontSize = (20 + Math.random() * 30) + 'px';
+                        fire.style.animation = 'fireExplosion 1.2s ease-out forwards';
+                        fire.style.animationDelay = (Math.random() * 0.5) + 's';
+                        explosionContainer.appendChild(fire);
+                        
+                        setTimeout(() => fire.remove(), 1200);
+                    }, i * 30);
+                }
+                
+                container.appendChild(explosionContainer);
+                setTimeout(() => explosionContainer.remove(), 2000);
+                
             } else if (effectType === 'heart-burst') {
                 // Heart burst voor hearts
                 const burst = document.createElement('div');
@@ -2433,6 +2688,31 @@
                 container.appendChild(circle);
                 setTimeout(() => circle.remove(), 1000);
             }
+        }
+
+        // Add fire explosion animation to CSS
+        const fireExplosionCSS = `
+        @keyframes fireExplosion {
+            0% { 
+                transform: scale(0) rotate(0deg); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: scale(1.5) rotate(180deg); 
+                opacity: 0.8; 
+            }
+            100% { 
+                transform: scale(3) rotate(360deg) translateY(-60px); 
+                opacity: 0; 
+            }
+        }`;
+        
+        // Inject CSS if not already added
+        if (!document.querySelector('#fire-explosion-css')) {
+            const style = document.createElement('style');
+            style.id = 'fire-explosion-css';
+            style.textContent = fireExplosionCSS;
+            document.head.appendChild(style);
         }
 
         function createCelebrationHearts(x, y) {
@@ -2660,6 +2940,55 @@
             }, 2000);
         }
 
+        function triggerInstantRain() {
+            if (rainActive || bonusActive) return;
+            
+            rainActive = true;
+            rainTimeLeft = 15;
+            rainScore = 0;
+            
+            playRainSound();
+            
+            // Spectaculaire fire-to-rain warning
+            const warning = document.createElement('div');
+            warning.classList.add('rain-warning');
+            warning.innerHTML = '🔥💥 FIRE IGNITES LOVE RAIN! 💥🔥<br>🌧️ INSTANT DOUBLE POINTS! 🌧️';
+            warning.style.background = 'linear-gradient(45deg, rgba(255, 69, 0, 0.95), rgba(156, 39, 176, 0.95))';
+            warning.style.animation = 'pulse 0.6s infinite, fireToRain 2s ease-in-out';
+            document.body.appendChild(warning);
+            
+            setTimeout(() => {
+                warning.remove();
+                rainBonus.style.display = 'block';
+                startRainItems();
+            }, 2000);
+        }
+
+        // Add fire-to-rain animation
+        const fireToRainCSS = `
+        @keyframes fireToRain {
+            0% { 
+                background: linear-gradient(45deg, rgba(255, 69, 0, 0.95), rgba(255, 140, 0, 0.95));
+                transform: scale(1);
+            }
+            50% { 
+                background: linear-gradient(45deg, rgba(255, 140, 0, 0.95), rgba(156, 39, 176, 0.95));
+                transform: scale(1.1);
+            }
+            100% { 
+                background: linear-gradient(45deg, rgba(156, 39, 176, 0.95), rgba(233, 30, 99, 0.95));
+                transform: scale(1);
+            }
+        }`;
+        
+        // Inject CSS if not already added
+        if (!document.querySelector('#fire-to-rain-css')) {
+            const style = document.createElement('style');
+            style.id = 'fire-to-rain-css';
+            style.textContent = fireToRainCSS;
+            document.head.appendChild(style);
+        }
+
         function startRainItems() {
             if (!rainActive) return;
             
@@ -2731,25 +3060,63 @@
             
             item.textContent = emoji;
             item.classList.add(sizeClass);
-            item.style.left = Math.random() * (window.innerWidth - 150) + 'px';
             
-            const duration = window.innerWidth <= 768 ? 2.5 + Math.random() * 1.5 : 1.5 + Math.random() * 1;
-            item.style.animationDuration = `${duration}s, 1s`;
+            // Verbeterde positionering voor rain items
+            const screenWidth = window.innerWidth;
+            const itemWidth = 100;
+            const margin = 20;
+            const spawnX = margin + Math.random() * (screenWidth - itemWidth - (margin * 2));
+            item.style.left = spawnX + 'px';
+            
+            // Snellere beweging voor rain bonus
+            const baseSpeed = window.innerWidth <= 768 ? 2.0 : 1.5; // Sneller dan normale game
+            const randomSpeed = 0.8 + Math.random() * 0.8; // 80% tot 160% van base speed
+            const finalSpeed = baseSpeed * randomSpeed;
+            
+            // Bewegingspatronen voor rain items
+            let driftAmount = -60 + Math.random() * 120; // -60px tot +60px
+            let rotationAmount = -180 + Math.random() * 360; // -180° tot +180°
+            let swayDuration = 1.0 + Math.random() * 1.0; // 1s tot 2s
+            
+            // CSS custom properties voor animaties
+            item.style.setProperty('--drift', driftAmount + 'px');
+            item.style.setProperty('--rotation', rotationAmount + 'deg');
+            item.style.animationDuration = `${finalSpeed}s, ${swayDuration}s`;
             
             item.addEventListener('click', () => {
                 if (!rainActive) return;
                 
-                playClickSound();
+                const itemX = item.offsetLeft + (item.offsetWidth / 2);
+                const itemY = item.offsetTop + (item.offsetHeight / 2);
+                
+                // Play sound en effect
+                if (sizeClass.includes('heart')) {
+                    const heartSize = sizeClass.includes('small') ? 'small' : 
+                                    sizeClass.includes('large') ? 'large' : 'medium';
+                    playHeartSound(heartSize);
+                    createSpecialEffect(itemX, itemY, 'heart-burst', 'heart');
+                } else if (sizeClass.includes('kiss')) {
+                    const kissSize = sizeClass.includes('small') ? 'small' : 
+                                   sizeClass.includes('large') ? 'large' : 'medium';
+                    playKissSound(kissSize);
+                    createSpecialEffect(itemX, itemY, 'kiss-ripple', 'kiss');
+                } else if (points === 'time') {
+                    playSpecialItemSound('timer');
+                    createSpecialEffect(itemX, itemY, 'sparkles', 'timer');
+                } else {
+                    playSpecialItemSound('rain');
+                    createSpecialEffect(itemX, itemY, 'sparkles', 'rain');
+                }
                 
                 if (points === 'time') {
                     addTime(3);
+                    showPointsPopup('+3s', item.offsetLeft, item.offsetTop);
                 } else {
                     rainScore += points;
+                    showPointsPopup(`+${points}`, item.offsetLeft, item.offsetTop);
                 }
                 
-                showPointsPopup(points === 'time' ? '+3s' : `+${points}`, item.offsetLeft, item.offsetTop);
                 item.remove();
-                
                 createCelebrationHearts(item.offsetLeft, item.offsetTop);
             });
             
@@ -2759,7 +3126,7 @@
                 if (item.parentNode) {
                     item.remove();
                 }
-            }, duration * 1000);
+            }, finalSpeed * 1000);
         }
 
         function endRainBonus() {
@@ -2802,33 +3169,39 @@
         }
 
         function showBonusReadyPopup() {
+            playBonusSound();
+            
             const popup = document.createElement('div');
             popup.classList.add('bonus-popup');
             popup.innerHTML = `
                 🎯 BONUS READY! 🎯<br>
-                <div style="font-size: 18px; margin-top: 10px;">Catch a 🎁 to start Heart Shooter!</div>
+                <div style="font-size: 18px; margin-top: 10px;">Look for 🎁 items to start Heart Shooter!</div>
+                <div style="font-size: 14px; margin-top: 5px; color: #fff9c4;">🎁 items will appear more often now!</div>
             `;
             
             document.body.appendChild(popup);
             
             setTimeout(() => {
                 popup.remove();
-            }, 3000);
+            }, 4000); // Langer zichtbaar
         }
 
         function showRainReadyPopup() {
+            playBonusSound();
+            
             const popup = document.createElement('div');
             popup.classList.add('bonus-popup', 'rain-popup');
             popup.innerHTML = `
                 🌧️ RAIN READY! 🌧️<br>
-                <div style="font-size: 18px; margin-top: 10px;">Catch a 🎀 to start Love Rain!</div>
+                <div style="font-size: 18px; margin-top: 10px;">Look for 🎀💎 items to start Love Rain!</div>
+                <div style="font-size: 14px; margin-top: 5px; color: #fff9c4;">🎀💎 items will appear more often now!</div>
             `;
             
             document.body.appendChild(popup);
             
             setTimeout(() => {
                 popup.remove();
-            }, 3000);
+            }, 4000); // Langer zichtbaar
         }
 
         // Event Listeners

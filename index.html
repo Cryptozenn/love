@@ -861,47 +861,131 @@
                 top: 15px;
             }
             
-            /* Mobile: Eén compact score blok */
+            /* Mobile: Redesigned compact score blok */
             .love-meter {
                 position: fixed;
-                top: 15px;
-                left: 15px;
-                right: 15px;
-                background: rgba(255, 255, 255, 0.95);
-                padding: 12px;
-                border-radius: 15px;
+                top: 12px;
+                left: 12px;
+                right: 12px;
+                background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,240,245,0.95));
+                padding: 10px 14px;
+                border-radius: 18px;
                 text-align: center;
                 z-index: 1000;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-                backdrop-filter: blur(10px);
+                box-shadow: 0 6px 20px rgba(233, 30, 99, 0.15);
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
             }
             
             .mobile-score-block {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 10px;
-                font-size: 16px;
-                font-weight: bold;
-                color: #e91e63;
+                margin-bottom: 8px;
+                font-size: 17px;
+                font-weight: 800;
+                background: linear-gradient(90deg, #e91e63, #f06292);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                text-shadow: none;
             }
             
             .mobile-level-info {
                 text-align: center;
                 font-size: 14px;
                 color: #ad1457;
-                margin-bottom: 8px;
+                margin-bottom: 6px;
+                font-weight: 700;
+                text-shadow: 0 1px 2px rgba(173, 20, 87, 0.1);
             }
             
             .heart-meter {
                 width: 100%;
                 height: 8px;
                 margin: 0;
+                background: linear-gradient(90deg, #ffcdd2, #f8bbd9);
+                border-radius: 6px;
+                overflow: hidden;
+                border: 2px solid rgba(233, 30, 99, 0.3);
+                box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            }
+            
+            .heart-fill {
+                background: linear-gradient(90deg, #ff4081, #e91e63, #c2185b);
+                border-radius: 4px;
+                box-shadow: 0 0 8px rgba(233, 30, 99, 0.4);
             }
             
             .level-progress {
                 font-size: 11px;
-                margin-top: 5px;
+                margin-top: 4px;
+                font-weight: 700;
+                color: #757575;
+                text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+            }
+            
+            /* Redesigned mobile bonus counters */
+            .mobile-bonus-indicators {
+                position: fixed;
+                top: 12px;
+                right: 12px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                z-index: 1001;
+            }
+            
+            .mobile-bonus-counter {
+                background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,245,250,0.9));
+                border: 1.5px solid rgba(233, 30, 99, 0.2);
+                padding: 5px 8px;
+                border-radius: 14px;
+                font-size: 11px;
+                font-weight: 700;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                min-width: 42px;
+                text-align: center;
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+                backdrop-filter: blur(10px);
+            }
+            
+            .mobile-bonus-counter:hover {
+                transform: scale(1.05) translateY(-1px);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            }
+            
+            .mobile-bonus-counter.ready {
+                background: linear-gradient(135deg, #4caf50, #66bb6a);
+                border-color: rgba(76, 175, 80, 0.4);
+                color: white;
+                animation: pulse 1.5s infinite;
+                box-shadow: 0 3px 12px rgba(76, 175, 80, 0.3);
+            }
+            
+            /* Aangepaste button posities met mooiere styling */
+            .sound-toggle, .high-scores-toggle {
+                background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,245,250,0.9));
+                border: 1.5px solid rgba(233, 30, 99, 0.2);
+                backdrop-filter: blur(10px);
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            }
+            
+            .sound-toggle {
+                top: 70px;
+                right: 12px;
+            }
+            
+            .high-scores-toggle {
+                top: 70px;
+                right: 58px;
+            }
+            
+            .sound-toggle:hover, .high-scores-toggle:hover {
+                transform: scale(1.08) translateY(-1px);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+                border-color: rgba(233, 30, 99, 0.4);
             }
             
             /* Verberg desktop header op mobile */
@@ -909,7 +993,7 @@
                 display: none;
             }
             
-            /* Verberg bonus/rain meters op mobile voor ruimte */
+            /* Verberg bonus/rain meters op mobile */
             .bonus-meter, .rain-meter {
                 display: none;
             }
@@ -925,11 +1009,27 @@
             }
             
             .start-title {
-                font-size: 28px;
+                font-size: 32px;
             }
             
             .start-instructions {
-                font-size: 14px;
+                font-size: 16px;
+            }
+            
+            /* Top 3 display - groter op mobile */
+            .top-three-display {
+                padding: 18px;
+                margin: 20px 0;
+            }
+            
+            .top-three-title {
+                font-size: 18px;
+                margin-bottom: 12px;
+            }
+            
+            .top-three-list {
+                font-size: 16px;
+                line-height: 1.6;
             }
             
             /* Mobile item sizes - kleiner voor moeilijkheid */
@@ -945,8 +1045,107 @@
             .rain-trigger-item, .bonus-item { font-size: 52px !important; }
         }
 
-        .hidden {
-            display: none !important;
+        /* Special Effects */
+        .sparkle-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1001;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: sparkleFloat 1s ease-out forwards;
+        }
+
+        @keyframes sparkleFloat {
+            0% { 
+                opacity: 1; 
+                transform: scale(0) rotate(0deg); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.5) rotate(180deg); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: scale(0) rotate(360deg) translateY(-40px); 
+            }
+        }
+
+        .heart-burst {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1001;
+            animation: heartBurst 0.8s ease-out forwards;
+        }
+
+        @keyframes heartBurst {
+            0% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: scale(1.5); 
+                opacity: 0.8; 
+            }
+            100% { 
+                transform: scale(2); 
+                opacity: 0; 
+            }
+        }
+
+        .kiss-ripple {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1001;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ff69b4;
+            border-radius: 50%;
+            animation: kissRipple 0.6s ease-out forwards;
+        }
+
+        @keyframes kissRipple {
+            0% { 
+                transform: scale(0); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: scale(4); 
+                opacity: 0; 
+            }
+        }
+
+        .magic-circle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #9c27b0;
+            border-radius: 50%;
+            animation: magicCircle 1s ease-out forwards;
+        }
+
+        @keyframes magicCircle {
+            0% { 
+                transform: scale(0) rotate(0deg); 
+                opacity: 1;
+                border-color: #9c27b0;
+            }
+            50% {
+                border-color: #ff9800;
+                opacity: 0.8;
+            }
+            100% { 
+                transform: scale(3) rotate(360deg); 
+                opacity: 0;
+                border-color: #4caf50;
+            }
         }
     </style>
 </head>
@@ -1053,6 +1252,17 @@
                 </div>
                 <div class="rain-text" id="rainProgress">0/8</div>
             </div>
+        </div>
+
+        <!-- Mobile Bonus Indicators (alleen zichtbaar op mobile) -->
+        <div class="mobile-bonus-indicators" style="display: none;">
+            <div class="mobile-bonus-counter" id="mobileBonusCounter">
+                🎁 <span id="mobileBonusProgress">0</span>
+            </div>
+            <div class="mobile-bonus-counter" id="mobileRainCounter">
+                🌧️ <span id="mobileRainProgress">0</span>
+            </div>
+        </div>
         </div>
 
         <div class="instructions">
@@ -1228,33 +1438,126 @@
             }
         }
 
-        function playClickSound() {
-            playSound(800, 'sine', 0.15, 0.08);
+        // Verschillende geluid effecten voor items
+        function playHeartSound(size = 'medium') {
+            if (!soundEnabled || !audioContext) return;
+            
+            // Harmonieuze hart geluiden
+            const frequencies = {
+                small: [523, 659], // C5, E5
+                medium: [440, 554, 659], // A4, C#5, E5
+                large: [349, 440, 554, 659] // F4, A4, C#5, E5
+            };
+            
+            const freqs = frequencies[size] || frequencies.medium;
+            freqs.forEach((freq, index) => {
+                setTimeout(() => {
+                    playSound(freq, 'sine', 0.3, 0.06);
+                }, index * 50);
+            });
         }
 
-        function playBonusSound() {
-            setTimeout(() => playSound(523, 'sine', 0.2, 0.1), 0);
-            setTimeout(() => playSound(659, 'sine', 0.2, 0.1), 100);
-            setTimeout(() => playSound(784, 'sine', 0.3, 0.1), 200);
+        function playKissSound(size = 'medium') {
+            if (!soundEnabled || !audioContext) return;
+            
+            // Zoete kus geluiden
+            const baseFreq = size === 'small' ? 880 : size === 'large' ? 1320 : 1100;
+            
+            // Dubbele toon voor kus effect
+            playSound(baseFreq, 'triangle', 0.2, 0.08);
+            setTimeout(() => {
+                playSound(baseFreq * 1.2, 'triangle', 0.15, 0.06);
+            }, 100);
+        }
+
+        function playSpecialItemSound(itemType) {
+            if (!soundEnabled || !audioContext) return;
+            
+            if (itemType === 'timer') {
+                // Klok tikken geluid
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        playSound(1000, 'square', 0.1, 0.08);
+                        setTimeout(() => playSound(800, 'square', 0.1, 0.06), 50);
+                    }, i * 150);
+                }
+            } else if (itemType === 'bonus') {
+                // Magisch geschenk geluid
+                const notes = [523, 659, 784, 1047]; // C5, E5, G5, C6
+                notes.forEach((note, index) => {
+                    setTimeout(() => {
+                        playSound(note, 'triangle', 0.25, 0.07);
+                    }, index * 80);
+                });
+            } else if (itemType === 'rain') {
+                // Regenboog/mystiek geluid
+                for (let i = 0; i < 6; i++) {
+                    setTimeout(() => {
+                        const freq = 400 + (i * 100) + Math.random() * 50;
+                        playSound(freq, 'sawtooth', 0.15, 0.05);
+                    }, i * 60);
+                }
+            }
         }
 
         function playLevelUpSound() {
-            setTimeout(() => playSound(440, 'square', 0.15, 0.1), 0);
-            setTimeout(() => playSound(554, 'square', 0.15, 0.1), 150);
-            setTimeout(() => playSound(659, 'square', 0.15, 0.1), 300);
-            setTimeout(() => playSound(880, 'square', 0.3, 0.1), 450);
+            if (!soundEnabled || !audioContext) return;
+            
+            // Epische level up fanfare
+            const melody = [440, 554, 659, 880, 1109]; // A4, C#5, E5, A5, C#6
+            melody.forEach((note, index) => {
+                setTimeout(() => {
+                    playSound(note, 'square', 0.2, 0.1);
+                    // Harmonische ondertoon
+                    setTimeout(() => {
+                        playSound(note * 0.5, 'sine', 0.4, 0.06);
+                    }, 50);
+                }, index * 120);
+            });
+        }
+
+        function playBonusSound() {
+            if (!soundEnabled || !audioContext) return;
+            
+            // Nog spectaculairdere bonus fanfare
+            const chord1 = [523, 659, 784]; // C major
+            const chord2 = [587, 740, 880]; // D major
+            const chord3 = [659, 831, 988]; // E major
+            
+            [chord1, chord2, chord3].forEach((chord, chordIndex) => {
+                setTimeout(() => {
+                    chord.forEach((note, noteIndex) => {
+                        setTimeout(() => {
+                            playSound(note, 'triangle', 0.4, 0.08);
+                        }, noteIndex * 20);
+                    });
+                }, chordIndex * 200);
+            });
         }
 
         function playRainSound() {
-            for (let i = 0; i < 5; i++) {
+            if (!soundEnabled || !audioContext) return;
+            
+            // Magische regen geluiden
+            for (let i = 0; i < 8; i++) {
                 setTimeout(() => {
-                    playSound(200 + Math.random() * 400, 'sawtooth', 0.1, 0.05);
-                }, i * 50);
+                    const freq = 300 + Math.random() * 600;
+                    playSound(freq, 'sawtooth', 0.15, 0.04);
+                    // Echo effect
+                    setTimeout(() => {
+                        playSound(freq * 0.8, 'sine', 0.2, 0.03);
+                    }, 100);
+                }, i * 80);
             }
         }
 
         function playTimeSound() {
-            playSound(1000, 'triangle', 0.25, 0.08);
+            if (!soundEnabled || !audioContext) return;
+            
+            // Energieke tijd bonus geluid
+            playSound(1200, 'triangle', 0.15, 0.1);
+            setTimeout(() => playSound(1400, 'triangle', 0.15, 0.08), 80);
+            setTimeout(() => playSound(1600, 'triangle', 0.2, 0.06), 160);
         }
 
         function toggleSound() {
@@ -1277,21 +1580,22 @@
                     highScores = JSON.parse(saved);
                 } else {
                     highScores = [
-                        { name: "Genni", score: 400, level: 4, date: new Date().toLocaleDateString('en-US') },
-                        { name: "Genni", score: 350, level: 3, date: new Date().toLocaleDateString('en-US') },
-                        { name: "Genni", score: 300, level: 3, date: new Date().toLocaleDateString('en-US') }
+                        { name: "Genni", score: 12000, level: 20, date: new Date().toLocaleDateString('en-US') },
+                        { name: "Genni", score: 10000, level: 18, date: new Date().toLocaleDateString('en-US') },
+                        { name: "Genni", score: 8000, level: 11, date: new Date().toLocaleDateString('en-US') }
                     ];
                     saveHighScores();
                 }
             } catch (e) {
                 console.log('Could not load high scores:', e);
                 highScores = [
-                    { name: "Emma", score: 400, level: 4, date: new Date().toLocaleDateString('en-US') },
-                    { name: "Alex", score: 350, level: 3, date: new Date().toLocaleDateString('en-US') },
-                    { name: "Sam", score: 300, level: 3, date: new Date().toLocaleDateString('en-US') }
+                    { name: "Genni", score: 12000, level: 20, date: new Date().toLocaleDateString('en-US') },
+                    { name: "Genni", score: 10000, level: 18, date: new Date().toLocaleDateString('en-US') },
+                    { name: "Genni", score: 8000, level: 11, date: new Date().toLocaleDateString('en-US') }
                 ];
             }
         }
+
 
         function saveHighScores() {
             try {
@@ -1418,11 +1722,29 @@
             bonusFillElement.style.width = percentage + '%';
             bonusProgressElement.textContent = `${bonusProgress}/15`;
             
+            // Update mobile bonus counter
+            const mobileBonusProgress = document.getElementById('mobileBonusProgress');
+            const mobileBonusCounter = document.getElementById('mobileBonusCounter');
+            if (mobileBonusProgress) {
+                mobileBonusProgress.textContent = bonusProgress;
+            }
+            
             if (bonusReady) {
                 bonusProgressElement.textContent = 'READY!';
                 bonusIndicatorElement.style.display = 'block';
+                
+                // Mobile ready state
+                if (mobileBonusCounter) {
+                    mobileBonusCounter.classList.add('ready');
+                    mobileBonusProgress.textContent = 'RDY';
+                }
             } else {
                 bonusIndicatorElement.style.display = 'none';
+                
+                // Mobile normal state
+                if (mobileBonusCounter) {
+                    mobileBonusCounter.classList.remove('ready');
+                }
             }
         }
 
@@ -1431,11 +1753,29 @@
             rainFillElement.style.width = percentage + '%';
             rainProgressElement.textContent = `${rainProgress}/8`;
             
+            // Update mobile rain counter
+            const mobileRainProgress = document.getElementById('mobileRainProgress');
+            const mobileRainCounter = document.getElementById('mobileRainCounter');
+            if (mobileRainProgress) {
+                mobileRainProgress.textContent = rainProgress;
+            }
+            
             if (rainReady) {
                 rainProgressElement.textContent = 'READY!';
                 rainIndicatorElement.style.display = 'block';
+                
+                // Mobile ready state
+                if (mobileRainCounter) {
+                    mobileRainCounter.classList.add('ready');
+                    mobileRainProgress.textContent = 'RDY';
+                }
             } else {
                 rainIndicatorElement.style.display = 'none';
+                
+                // Mobile normal state
+                if (mobileRainCounter) {
+                    mobileRainCounter.classList.remove('ready');
+                }
             }
         }
 
@@ -1468,6 +1808,12 @@
                 if (!bonusActive && !rainActive) {
                     timeLeft--;
                     timerElement.textContent = timeLeft;
+                    
+                    // Update mobile timer
+                    const mobileTimer = document.getElementById('mobileTimer');
+                    if (mobileTimer) {
+                        mobileTimer.textContent = timeLeft;
+                    }
                     
                     if (timeLeft <= 0) {
                         endGame();
@@ -1512,6 +1858,13 @@
         function updateScore(points) {
             score += points;
             scoreElement.textContent = score;
+            
+            // Update mobile score
+            const mobileScore = document.getElementById('mobileScore');
+            if (mobileScore) {
+                mobileScore.textContent = score;
+            }
+            
             checkLevelUp();
             updateLevelProgress();
         }
@@ -1519,6 +1872,13 @@
         function addTime(seconds) {
             timeLeft += seconds;
             timerElement.textContent = timeLeft;
+            
+            // Update mobile timer
+            const mobileTimer = document.getElementById('mobileTimer');
+            if (mobileTimer) {
+                mobileTimer.textContent = timeLeft;
+            }
+            
             showTimeBonus(seconds);
             playTimeSound();
         }
@@ -1541,10 +1901,26 @@
         }
 
         function checkLevelUp() {
-            const nextLevel = loveLevels.find(level => level.level === currentLevel + 1);
+            let nextLevel;
+            
+            if (currentLevel < loveLevels.length) {
+                // Gebruik vooraf gedefinieerde levels
+                nextLevel = loveLevels.find(level => level.level === currentLevel + 1);
+            } else {
+                // Genereer oneindige levels dynamisch
+                const pointsNeeded = 20000 + ((currentLevel - 20) * 2500); // Na level 20: 22500, 25000, 27500, etc.
+                nextLevel = {
+                    level: currentLevel + 1,
+                    name: generateLevelName(currentLevel + 1),
+                    pointsNeeded: pointsNeeded,
+                    timeBonus: 1 // Altijd 1 seconde na level 20
+                };
+            }
+            
             if (nextLevel && score >= nextLevel.pointsNeeded) {
-                const currentLevelData = loveLevels.find(level => level.level === currentLevel);
-                const timeBonus = currentLevelData ? currentLevelData.timeBonus : 1;
+                const currentLevelData = loveLevels.find(level => level.level === currentLevel) || 
+                                        { timeBonus: 1 }; // Default voor dynamische levels
+                const timeBonus = currentLevelData.timeBonus || 1;
                 
                 currentLevel++;
                 currentLevelElement.textContent = currentLevel;
@@ -1566,9 +1942,63 @@
             }
         }
 
+        function generateLevelName(level) {
+            const epicNames = [
+                "Love Transcendent", "Love Omnipotent", "Love Supreme", "Love Infinite",
+                "Love Eternal", "Love Divine", "Love Cosmic", "Love Universal", 
+                "Love Quantum", "Love Multiversal", "Love Celestial", "Love Astral",
+                "Love Mystical", "Love Legendary", "Love Mythical", "Love Galactic",
+                "Love Dimensional", "Love Timeless", "Love Boundless", "Love Ultimate",
+                "Love Primordial", "Love Ethereal", "Love Ascended", "Love Perfected",
+                "Love Enlightened", "Love Harmonious", "Love Radiant", "Love Luminous"
+            ];
+            
+            if (level <= 20) {
+                return loveLevels[level - 1]?.name || "Love Master";
+            } else if (level <= 48) { // 21-48 gebruiken epic names
+                return epicNames[(level - 21) % epicNames.length];
+            } else {
+                // Na level 48: Love God I, Love God II, etc.
+                const godLevel = level - 48;
+                return `Love God ${toRoman(godLevel)}`;
+            }
+        }
+
+        function toRoman(num) {
+            const values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+            const literals = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+            let result = '';
+            
+            for (let i = 0; i < values.length; i++) {
+                while (num >= values[i]) {
+                    result += literals[i];
+                    num -= values[i];
+                }
+            }
+            return result;
+        }
+
         function updateLevelProgress() {
-            const currentLevelData = loveLevels.find(level => level.level === currentLevel);
-            const nextLevelData = loveLevels.find(level => level.level === currentLevel + 1);
+            let currentLevelData, nextLevelData;
+            
+            if (currentLevel <= loveLevels.length) {
+                // Gebruik vooraf gedefinieerde levels
+                currentLevelData = loveLevels.find(level => level.level === currentLevel);
+                nextLevelData = loveLevels.find(level => level.level === currentLevel + 1);
+            }
+            
+            if (!nextLevelData) {
+                // Genereer dynamische next level voor oneindige progression
+                const pointsNeeded = currentLevel <= 20 ? 
+                    loveLevels[loveLevels.length - 1].pointsNeeded + ((currentLevel - 20) * 2500) :
+                    20000 + ((currentLevel - 19) * 2500);
+                    
+                nextLevelData = {
+                    level: currentLevel + 1,
+                    pointsNeeded: pointsNeeded,
+                    name: generateLevelName(currentLevel + 1)
+                };
+            }
             
             if (currentLevelData && nextLevelData) {
                 const currentLevelPoints = currentLevel === 1 ? 0 : currentLevelData.pointsNeeded;
@@ -1578,9 +2008,14 @@
                 
                 heartFillElement.style.width = percentage + '%';
                 levelProgressElement.textContent = `${pointsInLevel}/${pointsNeededForNext}`;
-            } else if (currentLevel >= loveLevels.length) {
-                heartFillElement.style.width = '100%';
-                levelProgressElement.textContent = 'MAX LEVEL!';
+            } else {
+                // Fallback voor zeer hoge levels
+                const estimatedNext = score + 2500; // Schatting voor volgende level
+                const pointsInLevel = score % 2500;
+                const percentage = (pointsInLevel / 2500) * 100;
+                
+                heartFillElement.style.width = percentage + '%';
+                levelProgressElement.textContent = `${pointsInLevel}/2500`;
             }
         }
 
@@ -1707,8 +2142,14 @@
             if (mobileTimer) mobileTimer.textContent = timeLeft;
             if (mobileLevel) mobileLevel.textContent = currentLevel;
             if (mobileLevelName) {
-                const currentLevelData = loveLevels.find(level => level.level === currentLevel);
-                if (currentLevelData) mobileLevelName.textContent = currentLevelData.name;
+                let levelName;
+                if (currentLevel <= loveLevels.length) {
+                    const currentLevelData = loveLevels.find(level => level.level === currentLevel);
+                    levelName = currentLevelData ? currentLevelData.name : generateLevelName(currentLevel);
+                } else {
+                    levelName = generateLevelName(currentLevel);
+                }
+                mobileLevelName.textContent = levelName;
             }
             
             updateLevelProgress();
@@ -1828,24 +2269,47 @@
             item.addEventListener('click', () => {
                 if (!gameActive || bonusActive || rainActive) return;
                 
-                playClickSound();
+                const itemX = item.offsetLeft + (item.offsetWidth / 2);
+                const itemY = item.offsetTop + (item.offsetHeight / 2);
                 
+                // Speel verschillende geluiden en effecten per item type
                 if (points === 'time') {
+                    playSpecialItemSound('timer');
+                    createSpecialEffect(itemX, itemY, 'sparkles', 'timer');
                     addTime(5);
                     showPointsPopup('+5s', item.offsetLeft, item.offsetTop);
                 } else if (points === 'bonus') {
                     if (bonusReady) {
+                        playSpecialItemSound('bonus');
+                        createSpecialEffect(itemX, itemY, 'magic-circle', 'bonus');
+                        createSpecialEffect(itemX, itemY, 'sparkles', 'bonus');
                         updateScore(50);
                         showPointsPopup('+50', item.offsetLeft, item.offsetTop);
                         setTimeout(() => triggerBonusGame(), 500);
                     }
                 } else if (points === 'rain') {
                     if (rainReady) {
+                        playSpecialItemSound('rain');
+                        createSpecialEffect(itemX, itemY, 'magic-circle', 'rain');
+                        createSpecialEffect(itemX, itemY, 'sparkles', 'rain');
                         updateScore(75);
                         showPointsPopup('+75', item.offsetLeft, item.offsetTop);
                         setTimeout(() => triggerRainBonus(), 500);
                     }
                 } else {
+                    // Reguliere items - verschillende geluiden en effecten
+                    if (sizeClass.includes('heart')) {
+                        const heartSize = sizeClass.includes('small') ? 'small' : 
+                                        sizeClass.includes('large') ? 'large' : 'medium';
+                        playHeartSound(heartSize);
+                        createSpecialEffect(itemX, itemY, 'heart-burst', 'heart');
+                    } else if (sizeClass.includes('kiss')) {
+                        const kissSize = sizeClass.includes('small') ? 'small' : 
+                                       sizeClass.includes('large') ? 'large' : 'medium';
+                        playKissSound(kissSize);
+                        createSpecialEffect(itemX, itemY, 'kiss-ripple', 'kiss');
+                    }
+                    
                     // Makkelijker bonus halen - verhoogd van 0.08 naar 0.15
                     if (!bonusReady && Math.random() < 0.15) {
                         bonusProgress++;
@@ -1900,6 +2364,75 @@
                     popup.remove();
                 }
             }, 1000);
+        }
+
+        function createSpecialEffect(x, y, effectType, itemType) {
+            const container = rainActive ? rainBonus : (bonusActive ? bonusGame : gameArea);
+            
+            if (effectType === 'sparkles') {
+                // Sparkle effect voor speciale items
+                const sparkleContainer = document.createElement('div');
+                sparkleContainer.classList.add('sparkle-effect');
+                sparkleContainer.style.left = x + 'px';
+                sparkleContainer.style.top = y + 'px';
+                
+                const colors = ['#ffd700', '#ff69b4', '#00bcd4', '#4caf50', '#ff9800', '#e91e63'];
+                
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(() => {
+                        const sparkle = document.createElement('div');
+                        sparkle.classList.add('sparkle');
+                        sparkle.style.left = (Math.random() * 60 - 30) + 'px';
+                        sparkle.style.top = (Math.random() * 60 - 30) + 'px';
+                        sparkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                        sparkle.style.animationDelay = (Math.random() * 0.3) + 's';
+                        sparkleContainer.appendChild(sparkle);
+                        
+                        setTimeout(() => sparkle.remove(), 1000);
+                    }, i * 50);
+                }
+                
+                container.appendChild(sparkleContainer);
+                setTimeout(() => sparkleContainer.remove(), 1500);
+                
+            } else if (effectType === 'heart-burst') {
+                // Heart burst voor hearts
+                const burst = document.createElement('div');
+                burst.classList.add('heart-burst');
+                burst.textContent = ['💖', '💕', '💗', '💝'][Math.floor(Math.random() * 4)];
+                burst.style.left = x + 'px';
+                burst.style.top = y + 'px';
+                burst.style.fontSize = '40px';
+                burst.style.transform = 'translate(-50%, -50%)';
+                
+                container.appendChild(burst);
+                setTimeout(() => burst.remove(), 800);
+                
+            } else if (effectType === 'kiss-ripple') {
+                // Ripple effect voor kisses
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const ripple = document.createElement('div');
+                        ripple.classList.add('kiss-ripple');
+                        ripple.style.left = (x - 10) + 'px';
+                        ripple.style.top = (y - 10) + 'px';
+                        ripple.style.animationDelay = (i * 0.1) + 's';
+                        
+                        container.appendChild(ripple);
+                        setTimeout(() => ripple.remove(), 600);
+                    }, i * 100);
+                }
+                
+            } else if (effectType === 'magic-circle') {
+                // Magic circle voor speciale items
+                const circle = document.createElement('div');
+                circle.classList.add('magic-circle');
+                circle.style.left = (x - 20) + 'px';
+                circle.style.top = (y - 20) + 'px';
+                
+                container.appendChild(circle);
+                setTimeout(() => circle.remove(), 1000);
+            }
         }
 
         function createCelebrationHearts(x, y) {
@@ -2307,10 +2840,15 @@
             function updateMobileDisplay() {
                 const isMobile = window.innerWidth <= 768;
                 const mobileElements = document.querySelectorAll('.mobile-score-block, .mobile-level-info');
+                const mobileIndicators = document.querySelector('.mobile-bonus-indicators');
                 
                 mobileElements.forEach(el => {
                     el.style.display = isMobile ? 'block' : 'none';
                 });
+                
+                if (mobileIndicators) {
+                    mobileIndicators.style.display = isMobile ? 'flex' : 'none';
+                }
             }
             
             updateMobileDisplay();

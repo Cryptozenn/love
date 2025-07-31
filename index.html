@@ -1819,7 +1819,7 @@
                 }
             }, 1000);
             
-            const spawnRate = window.innerWidth <= 768 ? 1200 : 800;
+const spawnRate = window.innerWidth <= 768 ? 600 : 400; // sneller spawnen
             itemSpawnTimer = setInterval(createFallingItem, spawnRate);
             backgroundTimer = setInterval(createBackgroundHeart, 2000);
             
